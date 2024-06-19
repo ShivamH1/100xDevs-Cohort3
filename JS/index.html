@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice</title>
+</head>
+<body>
+    <div id="countdown">30</div>
+    <script>
+        let countdownValue = 30;
+        function update() {
+            document.getElementById("countdown").innerHTML = countdownValue;
+            countdownValue--;
+
+            if (countdownValue < 0){
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "Timeout";
+            }
+        }
+        const countdownInterval = setInterval(update, 1000);
+    </script>
+</body>
+</html>
