@@ -38,7 +38,7 @@ router.post("/courses/:courseId", userMiddleware, async (req, res) => {
       username: username,
     },
     {
-      $push: {
+      "$push": {
         purchasedCourses: courseId,
       },
     }
