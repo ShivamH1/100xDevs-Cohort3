@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Week-4</title>
+    <script>
+      async function interestCal() {
+        const p = document.getElementById("principal").value;
+        const r = document.getElementById("rate").value;
+        const t = document.getElementById("time").value;
+
+        const response = await fetch(
+          "http://localhost:8080/interest?principal=" +
+            p +
+            "&rate=" +
+            r +
+            "&time=" +
+            t
+        );
+        const ans = await response.text();
+        document.getElementById("interest").innerHTML = ans;
+      }
+    </script>
+  </head>
+  <body>
+    <input id="principal" type="text" placeholder="Principal" /> <br />
+    <br />
+    <input id="rate" type="text" placeholder="Rate" /> <br />
+    <br />
+    <input id="time" type="text" placeholder="Time" /> <br />
+    <br />
+    <button onclick="interestCal()">Calculate Interest</button> <br />
+    <br />
+    <div id="interest"></div>
+  </body>
+</html>
