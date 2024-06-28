@@ -14,23 +14,35 @@ function App() {
     },
   ]);
 
+  function addNewTodo() {
+    setTodos([
+      ...todos,
+      {
+        title: "New todo",
+        description: "Description",
+      },
+    ]);
+  }
+
   return (
     <div>
+      <button onClick={addNewTodo}>Add a random todo</button>
       {/* <Todo title={todos[0].title} description={todos[0].description}></Todo>
       <Todo title={todos[1].title} description={todos[1].description}></Todo> */}
-      {todos.map((todo) =>{
-        return <Todo title={todo.title} description={todo.description}></Todo>
+      {todos.map((todo) => {
+        return <Todo title={todo.title} description={todo.description}></Todo>;
       })}
     </div>
-  )
-
+  );
 }
 
-function Todo(props){
-  return <div>
-    <h1>{props.title}</h1>
-    <h2>{props.description}</h2>
-  </div>
+function Todo(props) {
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      <h2>{props.description}</h2>
+    </div>
+  );
 }
 
 // let state = {
