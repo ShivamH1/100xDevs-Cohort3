@@ -15,7 +15,7 @@ export function CreateTodo() {
         type="text"
         placeholder="title"
         onChange={(e) => {
-          const value = e.target.value;
+          // const value = e.target.value;
           setTitle(e.target.value);
         }}
       ></input>
@@ -29,7 +29,7 @@ export function CreateTodo() {
         type="text"
         placeholder="description"
         onChange={(e) => {
-          const value = e.target.value;
+          // const value = e.target.value;
           setDescription(e.target.value);
         }}
       ></input>
@@ -50,7 +50,7 @@ export function CreateTodo() {
               "Content-type": "application/json",
             },
           }).then(async (res) => {
-            const json = await res.json();
+            // const json = await res.json();
             alert("Todo added");
           });
         }}

@@ -1,7 +1,7 @@
 const express = require("express");
 const { createTodo, updateTodo } = require("./types");
 const { todo } = require("./db");
-const cors = require("cors")
+const cors = require("cors") //to tackle cross origin request
 const app = express();
 
 app.use(express.json());
