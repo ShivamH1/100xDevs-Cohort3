@@ -1,11 +1,21 @@
-// import { useState } from "react";
+import { useState } from "react";
 // import { useEffect } from "react";
 import { Todo } from "../components/Todo";
 
 function App() {
+  const [selectedButtonId, setSelectedButtonId] = useState(1);
+
+  const handleButtonPress = (buttonId) => {
+    setSelectedButtonId(buttonId);
+  };
+
   return (
     <div>
-      <Todo id={3} />
+      <button onClick={() => handleButtonPress(1)}>1</button>
+      <button onClick={() => handleButtonPress(2)}>2</button>
+      <button onClick={() => handleButtonPress(3)}>3</button>
+      <button onClick={() => handleButtonPress(4)}>4</button>
+      <Todo id={selectedButtonId} />
     </div>
   );
 }
