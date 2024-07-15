@@ -1,4 +1,4 @@
-import { lazy, startTransition } from "react";
+import { lazy, startTransition, Suspense } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 
@@ -11,8 +11,8 @@ function App() {
       <BrowserRouter>
         <Appbar />
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Suspense fallback={"loading..."}><Landing /></Suspense>} />
+          <Route path="/dashboard" element={<Suspense fallback={"loading..."}><Dashboard /></Suspense>} />
         </Routes>
       </BrowserRouter>
     </div>
@@ -26,18 +26,20 @@ function Appbar() {
       <div>
         <button
           onClick={() => {
-            startTransition(() => {
-              navigate("/");
-            }); 
+            navigate("/");
+            // startTransition(() => {
+            //   navigate("/");
+            // }); 
           }}
         >
           Landing Page
         </button>
         <button
           onClick={() => {
-            startTransition(() => {
-              navigate("/dashboard");
-            });
+            navigate("/dashboard");
+            // startTransition(() => {
+            //   navigate("/dashboard");
+            // });
           }}
         >
           Dashboard
