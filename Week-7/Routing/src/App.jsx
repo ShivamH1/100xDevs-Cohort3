@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, startTransition } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 
@@ -26,14 +26,18 @@ function Appbar() {
       <div>
         <button
           onClick={() => {
-            navigate("/");
+            startTransition(() => {
+              navigate("/");
+            }); 
           }}
         >
           Landing Page
         </button>
         <button
           onClick={() => {
-            navigate("/dashboard");
+            startTransition(() => {
+              navigate("/dashboard");
+            });
           }}
         >
           Dashboard
