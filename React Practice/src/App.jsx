@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-
 // import Two from '../components/Two'
 // import Three from '../components/Three'
 // import Four from '../components/Four'
@@ -9,7 +8,11 @@ import "./App.css";
 // import Seven from "../components/Seven";
 // import Eight from "../components/Eight";
 // import Nine from "../components/Nine";
-import Ten from "../components/Ten";
+// import Ten from "../components/Ten";
+// import Eleven from "../components/Eleven";
+// import Twelfth from "../components/Twelfth";
+import Thirteen from "../components/Thirteen";
+
 
 export default function App() {
   return (
@@ -22,7 +25,10 @@ export default function App() {
       {/* <Seven /> */}
       {/* <Eight /> */}
       {/* <Nine /> */}
-      <Ten />
+      {/* <Ten /> */}
+      {/* <Eleven /> */}
+      {/* <Twelfth /> */}
+      <Thirteen />
     </div>
   );
 }
