@@ -11,10 +11,14 @@ import "./App.css";
 // import Ten from "../components/Ten";
 // import Eleven from "../components/Eleven";
 // import Twelfth from "../components/Twelfth";
-import Thirteen from "../components/Thirteen";
+// import Thirteen from "../components/Thirteen";
+// import Fourteen from "../components/Fourteen";
+// import Fifteen from "../components/fifteen";
+import Sixteen from "../components/sixteen";
 
 
 export default function App() {
+  const items = ['Item1', 'Item2', 'Item3', 'Item4', 'Item5','Another Item1', 'Another Item2'];
   return (
     <div>
       {/* <Two /> */}
@@ -28,7 +32,10 @@ export default function App() {
       {/* <Ten /> */}
       {/* <Eleven /> */}
       {/* <Twelfth /> */}
-      <Thirteen />
+      {/* <Thirteen /> */}
+      {/* <Fourteen /> */}
+      {/* <Fifteen items={items}/> */}
+      <Sixteen items={items} itemsperpage={2}/>
     </div>
   );
 }
