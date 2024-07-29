@@ -14,11 +14,11 @@ import "./App.css";
 // import Thirteen from "../components/Thirteen";
 // import Fourteen from "../components/Fourteen";
 // import Fifteen from "../components/fifteen";
-import Sixteen from "../components/sixteen";
+import Sixteen from "../components/Sixteen";
 
 
 export default function App() {
-  const items = ['Item1', 'Item2', 'Item3', 'Item4', 'Item5','Another Item1', 'Another Item2'];
+  // const items = ['Item1', 'Item2', 'Item3', 'Item4', 'Item5','Another Item1', 'Another Item2'];
   return (
     <div>
       {/* <Two /> */}
@@ -35,7 +35,7 @@ export default function App() {
       {/* <Thirteen /> */}
       {/* <Fourteen /> */}
       {/* <Fifteen items={items}/> */}
-      <Sixteen items={items} itemsperpage={2}/>
+      <Sixteen />
     </div>
   );
 }
