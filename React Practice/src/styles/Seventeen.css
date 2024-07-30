@@ -1,0 +1,18 @@
+.menu {
+    display: none;
+
+}
+
+.menu.open {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .menu-icon {
+        display: block;
+    }
+
+    .menu {
+        display: none;
+    }
+}
