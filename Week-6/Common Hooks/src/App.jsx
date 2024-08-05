@@ -1,26 +1,62 @@
-//useRef
-import { useEffect, useState, useRef } from "react";
+//useReducer
+import React, { useReducer } from 'react'
 
 function App() {
-  const [incomeTax, setIncomeTax] = useState(12000);
-  const divRef = useRef();
 
-  useEffect(() => {
-    setTimeout(() =>{
-      console.log(divRef.current);
-      divRef.current.innerHTML = 10;
-      // document.getElementById("container").innerHTML = 10;
-    }, 5000);
-  }, [])
+  const reducer = (state, action) => {
+    console.log(action, state);
+    if (action.type === 'incr') {
+      return {count : state.count + 1};
+    }else if (action.type === 'decr') {
+      return {count : state.count - 1};
+    }else {
+      throw new Error('Invalid action');
+    }
+  }
 
+  const [state, dispatch] = useReducer(reducer, {count : 0});
+
+  const handleClickInc = () => {
+    dispatch({type : 'incr'});
+  }
+
+  const handleClickDec = () => {
+    dispatch({type : 'decr'});
+  }
 
   return (
     <div>
-      {/* hi there, your income tax is <div id="container">{incomeTax}</div> */}
-      hi there, your income tax is <div ref={divRef}>{incomeTax}</div>
+      <h1>Count : {state.count}</h1>
+      <button onClick={handleClickInc}>Increment</button>
+      <button onClick={handleClickDec}>Decrement</button>
     </div>
   )
 }
+
+
+//useRef
+// import { useEffect, useState, useRef } from "react";
+
+// function App() {
+//   const [incomeTax, setIncomeTax] = useState(12000);
+//   const divRef = useRef();
+
+//   useEffect(() => {
+//     setTimeout(() =>{
+//       console.log(divRef.current);
+//       divRef.current.innerHTML = 10;
+//       // document.getElementById("container").innerHTML = 10;
+//     }, 5000);
+//   }, [])
+
+
+//   return (
+//     <div>
+//       {/* hi there, your income tax is <div id="container">{incomeTax}</div> */}
+//       hi there, your income tax is <div ref={divRef}>{incomeTax}</div>
+//     </div>
+//   )
+// }
 
 //useCallback
 // import { useEffect, useState, useCallback } from "react";
