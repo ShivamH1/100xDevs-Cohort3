@@ -3,27 +3,51 @@ import React, { useReducer } from 'react'
 
 function App() {
 
+  // This is a reducer function. It takes in two parameters: the current state 
+  // and an action object. It returns a new state object based on the action type.
+  // The reducer function is passed to the useReducer hook.
   const reducer = (state, action) => {
+    // Log the action and current state to the console for debugging purposes.
     console.log(action, state);
+
+    // Check if the action type is 'incr'. If so, increment the count in the 
+    // state object by 1 and return the new state object.
     if (action.type === 'incr') {
       return {count : state.count + 1};
-    }else if (action.type === 'decr') {
+    }
+    // Check if the action type is 'decr'. If so, decrement the count in the 
+    // state object by 1 and return the new state object.
+    else if (action.type === 'decr') {
       return {count : state.count - 1};
-    }else {
+    }
+    // If the action type is neither 'incr' nor 'decr', throw an error.
+    else {
       throw new Error('Invalid action');
     }
   }
 
+  // Call the useReducer hook, passing in the reducer function and an initial 
+  // state object with a count property set to 0. The useReducer hook returns an 
+  // array with two elements: the current state and a dispatch function.
   const [state, dispatch] = useReducer(reducer, {count : 0});
 
+  // Define a function handleClickInc that dispatches an action object with a 
+  // type property set to 'incr'.
   const handleClickInc = () => {
     dispatch({type : 'incr'});
   }
 
+  // Define a function handleClickDec that dispatches an action object with a 
+  // type property set to 'decr'.
   const handleClickDec = () => {
     dispatch({type : 'decr'});
   }
 
+  // Return JSX that renders a div with an h1 element displaying the current 
+  // count and two buttons. When the increment button is clicked, the 
+  // handleClickInc function is called, which dispatches an action to increment 
+  // the count. When the decrement button is clicked, the handleClickDec 
+  // function is called, which dispatches an action to decrement the count.
   return (
     <div>
       <h1>Count : {state.count}</h1>
