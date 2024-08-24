@@ -5,7 +5,7 @@ const program = new Command();
 program
   .name('wordcounter')
   .description('CLI to count the number of words in a file')
-  .version('1.0.0');
+  .version('0.8.0');
 
 program
   .command('count <file>')
