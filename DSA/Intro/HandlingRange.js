@@ -78,3 +78,35 @@ function maxPopulation(logs) {
      */
     return maxYear;
 }
+
+//dry run
+
+// Update Gain Array:
+// Log [1950, 1961]:
+// Increment gain[1950 - 1950] (i.e., gain[0]) by 1 → gain[0] = 1
+// Decrement gain[1961 - 1950] (i.e., gain[11]) by 1 → gain[11] = -1
+// Log [1960, 1971]:
+// Increment gain[1960 - 1950] (i.e., gain[10]) by 1 → gain[10] = 1
+// Decrement gain[1971 - 1950] (i.e., gain[21]) by 1 → gain[21] = -1
+// Log [1970, 1981]:
+// Increment gain[1970 - 1950] (i.e., gain[20]) by 1 → gain[20] = 1
+// Decrement gain[1981 - 1950] (i.e., gain[31]) by 1 → gain[31] = -1
+
+// gain = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, 0, ..., -1, ...]
+//          ^         ^                           ^                       ^
+//        1950       1960                        1970                    1981
+
+// Year-wise population calculation:
+
+// Year 1950: currentPopulation += gain[0] → 0 + 1 = 1
+// Since 1 > 0, update maxPopulation = 1 and maxYear = 1950.
+// Years 1951 to 1959: currentPopulation remains 1, and maxPopulation remains 1 with maxYear = 1950.
+// Year 1960: currentPopulation += gain[10] → 1 + 1 = 2
+// Since 2 > 1, update maxPopulation = 2 and maxYear = 1960.
+// Year 1961: currentPopulation += gain[11] → 2 - 1 = 1
+// Years 1962 to 1969: currentPopulation remains 1, and maxPopulation remains 2 with maxYear = 1960.
+// Year 1970: currentPopulation += gain[20] → 1 + 1 = 2
+// Since 2 == maxPopulation, we keep maxYear = 1960 because it’s the earliest.
+// Year 1971: currentPopulation += gain[21] → 2 - 1 = 1
+// Years 1972 to 1980: currentPopulation remains 1, and maxPopulation remains 2 with maxYear = 1960.
+// The loop continues, but maxPopulation and maxYear do not change.
