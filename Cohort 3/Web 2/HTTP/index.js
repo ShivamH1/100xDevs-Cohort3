@@ -6,6 +6,95 @@ app.use(express.json());
 
 const users = [];
 
+<<<<<<< HEAD
+function generateToken() {
+  let options = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+  ];
+
+  let token = "";
+  for (let i = 0; i < 32; i++) {
+    // use a simple function here
+    token += options[Math.floor(Math.random() * options.length)];
+  }
+  return token;
+}
+
+app.get("/me", (req, res) => {
+  const token = req.headers.authorization;
+  const user = users.find((u) => u.token === token);
+  if (user) {
+    res.send({
+      username: user.username,
+    });
+  } else {
+    res.status(403).send({
+      msg: "Invalid credentials",
+    });
+  }
+});
+=======
 //stateful token - we need to store these tokens in a variable right now (and eventually in a database).
 
 // function generateToken() {
@@ -119,6 +208,7 @@ app.get("/me", (req, res) => {
       res.status(401).json({ error: 'Invalid token' });
     }
   });
+>>>>>>> 4eb7f4791d342cf139b5ba4f1f2386ac6fbf97ab
 
 app.post("/signup", (req, res) => {
   const username = req.body.username;
@@ -129,6 +219,10 @@ app.post("/signup", (req, res) => {
   res.json({
     msg: "User created successfully",
   });
+<<<<<<< HEAD
+  console.log(users);
+=======
+>>>>>>> 4eb7f4791d342cf139b5ba4f1f2386ac6fbf97ab
 });
 
 app.post("/signin", (req, res) => {
@@ -136,6 +230,17 @@ app.post("/signin", (req, res) => {
   const password = req.body.password;
 
   const user = users.find(
+<<<<<<< HEAD
+    (u) => u.username === username && u.password === password
+  );
+
+  if (user) {
+    const token = generateToken();
+    user.token = token;
+    res.json({
+      msg: "User logged in successfully",
+      token: generateToken(),
+=======
     (user) => user.username === username && user.password === password
   );
 
@@ -149,13 +254,21 @@ app.post("/signin", (req, res) => {
     // user.token = token;
     res.send({
       token,
+>>>>>>> 4eb7f4791d342cf139b5ba4f1f2386ac6fbf97ab
     });
     console.log(users);
   } else {
     res.status(403).send({
+<<<<<<< HEAD
+      msg: "Invalid credentials",
+    });
+  }
+  console.log(users);
+=======
       message: "Invalid username or password",
     });
   }
+>>>>>>> 4eb7f4791d342cf139b5ba4f1f2386ac6fbf97ab
 });
 
 app.listen(3000);
