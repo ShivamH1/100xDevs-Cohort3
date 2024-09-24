@@ -1,0 +1,28 @@
+//Solana CLI: Command-line interface tools.
+solana rent 16
+
+//Solana Web3.js Library: JavaScript library for interacting with the Solana blockchain.
+
+const { Connection, clusterApiUrl, LAMPORTS_PER_SOL } = require('@solana/web3.js');
+const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');
+
+(async () => {
+    const dataSize = 16; // Replace with the desired account size in bytes
+    const minBalance = await connection.getMinimumBalanceForRentExemption(dataSize);
+    console.log(`Rent-exempt minimum: ${minBalance / LAMPORTS_PER_SOL} SOL`);
+})();
+
+//Anchor's Space Constraint: A framework-specific approach for calculating space requirements for accounts.
+#[derive(Accounts)]
+pub struct Initialize<'info> {
+    #[account(init, payer = signer, space = 8 + 8)]
+    pub new_account: Account<'info, NewAccount>,
+    #[account(mut)]
+    pub signer: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[account]
+pub struct NewAccount {
+    data: u64
+}
