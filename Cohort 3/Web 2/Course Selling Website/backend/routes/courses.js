@@ -1,11 +1,14 @@
-function createCourseRoute(app) {
-  app.get("/list", (req, res) => {
-    res.json({});
-  });
+const { Router } = require("express");
+const courseRoute = Router();
 
-  app.get("/purchases", (req, res) => {
-    res.json({});
-  });
-}
+courseRoute.get("/list", (req, res) => {
+  res.json({});
+});
 
-module.exports = createCourseRoute
+courseRoute.get("/purchases", (req, res) => {
+  res.json({});
+});
+
+module.exports = {
+    courseRoute: courseRoute
+};

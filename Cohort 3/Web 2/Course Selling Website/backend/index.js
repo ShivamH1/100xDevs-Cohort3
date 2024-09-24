@@ -1,13 +1,12 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
-const createUserRoute = require("./routes/user");
-const createCourseRoute = require("./routes/courses");
+const { userRouter } = require("./routes/user");
+const { courseRoute } = require("./routes/courses");
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/user",createUserRoute);
-app.use("/courses", createCourseRoute);
+app.use("/user", userRouter);
+app.use("/courses", courseRoute);
 
 app.listen(3000);
