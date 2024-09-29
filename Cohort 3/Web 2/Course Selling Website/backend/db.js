@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
-
-mongoose
-  .connect(
-    "mongodb+srv://admin:India%40123@100xdev.7gly1js.mongodb.net/coursera-app"
-  )
-  .then(() => {
-    console.log("db connected");
-  });
+// mongoose
+//   .connect(
+//     "mongodb+srv://admin:India%40123@100xdev.7gly1js.mongodb.net/coursera-app"
+//   )
+//   .then(() => {
+//     console.log("db connected");
+//   });
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
