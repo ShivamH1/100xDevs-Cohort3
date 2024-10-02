@@ -1,6 +1,11 @@
 const { Router } = require("express");
 const jwt = require("jsonwebtoken");
-const JWT_USER_PASS = "user123";
+
+//always have different JWT secret for both admin and users to avoid the access of user to admin or admin to user
+// const JWT_USER_PASS = "user123";
+
+const { JWT_USER_PASS } = require("../config")
+
 const userRoute = Router();
 const bcrypt = require("bcrypt");
 const { z } = require("zod");
