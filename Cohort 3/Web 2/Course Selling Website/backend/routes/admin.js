@@ -1,11 +1,17 @@
 const { Router } = require("express");
 const adminRoute = Router();
 const jwt = require("jsonwebtoken");
-const JWT_USER_PASS = "admin123";
+
+//always have different JWT secret for both admin and users to avoid the access of user to admin or admin to user
+// const JWT_ADMIN_PASS = "admin123";
+
+const { JWT_ADMIN_PASS } = require("../config");
+
 const bcrypt = require("bcrypt");
 const { z } = require("zod");
 
-const { adminModel } = require("../db");
+const { adminModel, courseModel } = require("../db");
+const { adminMiddleware } = require("../middleware/admin");
 
 adminRoute.post("/signup", async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
@@ -28,11 +34,11 @@ adminRoute.post("/signup", async (req, res) => {
 });
 
 adminRoute.post("/signin", async (req, res) => {
-  const { email, password, firstName } = req.body;
+  const { email, password } = req.body;
   const user = await adminModel.findOne({ email, password });
 
   if (user) {
-    const token = jwt.sign({ id: user._id }, JWT_USER_PASS);
+    const token = jwt.sign({ id: user._id }, JWT_ADMIN_PASS);
     res.json({
       msg: "Signin Successfull",
       token: token,
@@ -44,21 +50,68 @@ adminRoute.post("/signin", async (req, res) => {
   }
 });
 
-adminRoute.post("/", (req, res) => {
+adminRoute.post("/course", adminMiddleware, async (req, res) => {
+  const adminId = req.userId;
+
+  const { title, description, imageLink, price } = req.body;
+
+  const course = await courseModel.create({
+    title,
+    description,
+    imageLink,
+    price,
+    creatorId: adminId,
+  });
+
   res.json({
-    msg: "Admin Create Course",
+    msg: "course created",
+    course,
   });
 });
 
-adminRoute.put("/", (req, res) => {
+adminRoute.put("/course", adminMiddleware, async (req, res) => {
+  const adminId = req.userId;
+
+  const { title, description, imageLink, price, courseId } = req.body;
+
+  //check - to identify whether the owner is making the changes?
+  const course = await courseModel.findOne({
+    _id: courseId,
+    creatorId: adminId,
+  });
+  if (!course) {
+    res.json({ msg: "course not found" });
+    return;
+  }
+
+  const updatedCourse = await courseModel.updateOne(
+    {
+      _id: courseId,
+      creatorId: adminId,
+    },
+    {
+      title,
+      description,
+      imageLink,
+      price,
+    }
+  );
+
   res.json({
     msg: "Course Updated",
+    updatedCourse,
   });
 });
 
-adminRoute.get("/bulk", (req, res) => {
+adminRoute.get("/course/bulk", adminMiddleware, async (req, res) => {
+  const adminId = req.userId;
+
+  const courses = await courseModel.find({
+    creatorId: adminId,
+  });
   res.json({
-    msg: "Course Bulk",
+    msg: "Creator Courses",
+    courses
   });
 });
 
