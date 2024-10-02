@@ -44,19 +44,19 @@ adminRoute.post("/signin", async (req, res) => {
   }
 });
 
-adminRoute.post("/", (req, res) => {
+adminRoute.post("/courses", (req, res) => {
   res.json({
     msg: "Admin Create Course",
   });
 });
 
-adminRoute.put("/", (req, res) => {
+adminRoute.put("/course", (req, res) => {
   res.json({
     msg: "Course Updated",
   });
 });
 
-adminRoute.get("/bulk", (req, res) => {
+adminRoute.get("/courses/bulk", (req, res) => {
   res.json({
     msg: "Course Bulk",
   });
