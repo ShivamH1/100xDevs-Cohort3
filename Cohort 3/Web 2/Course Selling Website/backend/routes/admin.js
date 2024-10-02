@@ -60,34 +60,58 @@ adminRoute.post("/course", adminMiddleware, async (req, res) => {
     description,
     imageLink,
     price,
-    creatorId : adminId,
+    creatorId: adminId,
   });
 
   res.json({
     msg: "course created",
-    course
+    course,
   });
 });
 
 adminRoute.put("/course", adminMiddleware, async (req, res) => {
-  const courseId = req.body.userId;
+  const adminId = req.userId;
 
-  const updatedCourse = await courseModel.findByIdAndUpdate(
-    courseId,
-    req.body,
-    { new: true }
+  const { title, description, imageLink, price, courseId } = req.body;
+
+  //check - to identify whether the owner is making the changes?
+  const course = await courseModel.findOne({
+    _id: courseId,
+    creatorId: adminId,
+  });
+  if (!course) {
+    res.json({ msg: "course not found" });
+    return;
+  }
+
+  const updatedCourse = await courseModel.updateOne(
+    {
+      _id: courseId,
+      creatorId: adminId,
+    },
+    {
+      title,
+      description,
+      imageLink,
+      price,
+    }
   );
 
   res.json({
     msg: "Course Updated",
-    updatedCourse
+    updatedCourse,
   });
 });
 
-adminRoute.get("/courses/bulk", (req, res) => {
-  
+adminRoute.get("/course/bulk", adminMiddleware, async (req, res) => {
+  const adminId = req.userId;
+
+  const courses = await courseModel.find({
+    creatorId: adminId,
+  });
   res.json({
-    msg: "Course Bulk",
+    msg: "Creator Courses",
+    courses
   });
 });
 
