@@ -4,13 +4,14 @@ const jwt = require("jsonwebtoken");
 //always have different JWT secret for both admin and users to avoid the access of user to admin or admin to user
 // const JWT_USER_PASS = "user123";
 
-const { JWT_USER_PASS } = require("../config")
+const { JWT_USER_PASS } = require("../config");
 
 const userRoute = Router();
 const bcrypt = require("bcrypt");
 const { z } = require("zod");
 
-const { userModel } = require("../db");
+const { userModel, purchaseModel } = require("../db");
+const { userMiddleware } = require("../middleware/user");
 
 const signupSchema = z.object({
   email: z.string().email(),
@@ -62,9 +63,16 @@ userRoute.post("/login", async (req, res) => {
   }
 });
 
-userRoute.post("/purchases", (req, res) => {
+userRoute.get("/purchases", userMiddleware, async (req, res) => {
+  const userId = req.userId;
+  
+  const purchases = await purchaseModel.find({
+    userId
+  })
+
   res.json({
-    msg: "purchases endpoint",
+    msg: "Purchased a course",
+    purchases,
   });
 });
 
