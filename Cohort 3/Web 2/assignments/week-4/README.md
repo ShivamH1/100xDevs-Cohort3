@@ -1,12 +1,21 @@
-### How to test the code ?
+# Taskify Backend
 
-suppose I want to test my solution for `week-4/ middlewares/01-requestcount.js`. so go inside `week-4/middlewares` and run this command:
+Create Basic Version Backend of Taskify assignment ( week-3 hard ).
+
+### Setup Guide
+
+1. go inside week-4/hard and run:
 
 ```
-npx jest ./tests/01-requestcount.spec.js 
+ npm install 
 ```
 
-format of the command is:
+2. copy .env.example to .env.
 ```
-npx jest ./tests/<file_name>.spec.js
+cp .env.example .env
+```
+
+3. run the server.
+```
+npm run dev
 ```
