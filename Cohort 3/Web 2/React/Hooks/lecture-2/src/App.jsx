@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   return (
@@ -22,6 +22,14 @@ function Counter() {
   // setInterval(() => {
   //   setCount(count + 1);
   // },1000);
+
+  //what we can do here is use useEffect to avoid the re-rendering problem
+  useEffect(() => {
+    setInterval(() => {
+      setCount((count) => count + 1);
+    }, 1000);
+    console.log("Inside useEffect - mounted");
+  },[]);
 
   const increment = () => {
     setCount(count + 1);
