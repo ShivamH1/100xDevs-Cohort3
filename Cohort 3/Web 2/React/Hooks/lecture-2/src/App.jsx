@@ -1,73 +1,121 @@
 import { useEffect, useState } from "react";
+import ErrorBoundary from "./ErrorBoundary";
 
+//error boundary works only with class based components as of now. What it does is if there's a error in one component the whole
+// app shouldn't crash it should fallback to another component.
 function App() {
-  const [isModalOpen, setModalOpen] = useState(false);
-
   return (
     <div>
-      {/* <Counter /> */}
-      <button onClick={() => setModalOpen(true)}>Open Modal</button>
-      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-        <h2>Modal Title</h2>
-        <p>This is some content inside the modal.</p>
-      </Modal>
-      <Collapsible title="Section 1">
-        <p>This is the content of section 1.</p>
-      </Collapsible>
-      <Collapsible title="Section 2">
-        <p>This is the content of section 2.</p>
-      </Collapsible>
+      <ErrorBoundary>
+        <Card1 />
+      </ErrorBoundary>
+      <Card2 />
     </div>
   );
 }
-// When rendering lists, each item should have a unique key prop for React to track changes efficiently.
-// The key prop is a string or number that uniquely identifies the item in the list.
 
-//children passing and wrapping
-const Modal = ({ isOpen, onClose, children }) => {
-  if (!isOpen) return null;
+function Card1() {
+  throw new Error("Error in Card 1");
 
   return (
     <div
       style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        padding: "20px",
+        margin: "10px",
       }}
     >
-      <div
-        style={{
-          background: "white",
-          padding: "20px",
-          borderRadius: "5px",
-        }}
-      >
-        <button onClick={onClose}>Close</button>
-        {children}
-      </div>
+      <h2>Card 1</h2>
+      <p>This is the content of card 1.</p>
     </div>
   );
-};
+}
 
-//children passing and wrapping
-const Collapsible = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+function Card2() {
   return (
-    <div>
-      <button onClick={() => setIsOpen(!isOpen)}>
-        {title} {isOpen ? "-" : "+"}
-      </button>
-      {isOpen && <div>{children}</div>}
+    <div
+      style={{
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        padding: "20px",
+        margin: "10px",
+      }}
+    >
+      <h2>Card 2</h2>
+      <p>This is the content of card 2.</p>
     </div>
   );
-};
+}
+
+// function App() {
+//   const [isModalOpen, setModalOpen] = useState(false);
+
+//   return (
+//     <div>
+//       {/* <Counter /> */}
+//       <button onClick={() => setModalOpen(true)}>Open Modal</button>
+//       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+//         <h2>Modal Title</h2>
+//         <p>This is some content inside the modal.</p>
+//       </Modal>
+//       <Collapsible title="Section 1">
+//         <p>This is the content of section 1.</p>
+//       </Collapsible>
+//       <Collapsible title="Section 2">
+//         <p>This is the content of section 2.</p>
+//       </Collapsible>
+//     </div>
+//   );
+// }
+// // When rendering lists, each item should have a unique key prop for React to track changes efficiently.
+// // The key prop is a string or number that uniquely identifies the item in the list.
+
+// //children passing and wrapping
+// const Modal = ({ isOpen, onClose, children }) => {
+//   if (!isOpen) return null;
+
+//   return (
+//     <div
+//       style={{
+//         position: "fixed",
+//         top: 0,
+//         left: 0,
+//         right: 0,
+//         bottom: 0,
+//         backgroundColor: "rgba(0, 0, 0, 0.5)",
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//       }}
+//     >
+//       <div
+//         style={{
+//           background: "white",
+//           padding: "20px",
+//           borderRadius: "5px",
+//         }}
+//       >
+//         <button onClick={onClose}>Close</button>
+//         {children}
+//       </div>
+//     </div>
+//   );
+// };
+
+// //children passing and wrapping
+// const Collapsible = ({ title, children }) => {
+//   const [isOpen, setIsOpen] = useState(false);
+
+//   return (
+//     <div>
+//       <button onClick={() => setIsOpen(!isOpen)}>
+//         {title} {isOpen ? "-" : "+"}
+//       </button>
+//       {isOpen && <div>{children}</div>}
+//     </div>
+//   );
+// };
 
 // function Counter() {
 //   const [count, setCount] = useState(0);
