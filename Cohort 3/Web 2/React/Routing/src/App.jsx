@@ -6,10 +6,49 @@ import React from 'react'
 // where each interaction often requires a full page reload.
 // How you do that is by using react-routing:
 
-function App() {
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Layout from "./pages/Layout";
+import Home from "./pages/Home";
+import Blogs from "./pages/Blogs";
+import Contact from "./pages/Contact";
+import NoPage from "./pages/NoPage";
+
+export default function App() {
   return (
-    <div>App</div>
-  )
+    <BrowserRouter>
+      <Link to="/">Allen</Link>
+      | 
+      <Link to="/neet/online-coaching-class-11">Class 11</Link> 
+      | 
+      <Link to="/neet/online-coaching-class-12">Class 12</Link>
+      <Routes>
+        <Route path="/" element={<Layout />} />
+        <Route path="/neet/online-coaching-class-11" element={<Class11Program />} />
+        <Route path="/neet/online-coaching-class-12" element={<Class12Program />} />
+        <Route path="/landing" element={<Landing />} />
+        <Route index element={<Home />} />
+        <Route path="blogs" element={<Blogs />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="*" element={<NoPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+function Landing() {
+  return <div>
+    Welcome to allen
+  </div>
+}
+
+function Class11Program() {
+  return <div>
+      NEET programs for Class 11th
+  </div>
+}
+
+function Class12Program() {
+  return <div>
+      NEET programs for Class 12th
+  </div>
+}
