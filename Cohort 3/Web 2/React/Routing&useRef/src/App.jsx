@@ -17,7 +17,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}> {/* Parent Route */}
+        <Route path="/neet" element={<Layout />}> {/* Parent Route */}
           <Route
             path="/neet/online-coaching-class-11"
             element={<Class11Program />}
