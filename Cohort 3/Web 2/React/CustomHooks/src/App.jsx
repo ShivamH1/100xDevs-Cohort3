@@ -136,7 +136,7 @@ export const useDebounce = (value, delay) => {
 };
 
 function App() {
-  // const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0); instead of using this we use useCounter hook
   const { count, increaseCount, decrementCount } = useCounter();
   const prevCount = usePrev(count);
 
