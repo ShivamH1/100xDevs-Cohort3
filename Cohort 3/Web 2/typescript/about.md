@@ -33,3 +33,76 @@ swc
 
 ## Typescript provides you some basic types - number, string, boolean, null, undefined, etc.
 ### You should try to avoid the usage of any, because if using any cause the problem of type safety. If we want for say number and string then write as number | string.
+
+## The tsconfig file has a bunch of options that you can change to change the compilation process.Some of these include:
+### 1. target - The target option in a tsconfig.json file specifies the ECMAScript target version to which the TypeScript compiler will compile the TypeScript code. To try it out, try compiling the following code for target being ES5 and es2020
+### 2. rootDir - Where should the compiler look for .ts files. Good practise is for this to be the src folder
+### 3. outDir - Where should the compiler look for spit out the .js files. Example dist folder
+### 4. noImplicitAny - This option raises an error when a variable is implicitly assigned an 'any' type, promoting safer code.
+### Enabling this option helps catch potential bugs early by ensuring explicit type declarations.
+### 5. removeComments - Weather or not to include comments in the final js file
+
+## Interfaces:
+### Interfaces in TypeScript are a way to define the structure of an object, specifying what properties and methods it should have without providing implementations. They are used for type-checking, ensuring that objects adhere to specific contracts or shapes.
+#### Example:
+```
+// How can you assign types to objects? For example, a user object that looks like this - 
+const user = {
+	firstName: "harkirat",
+	lastName: "singh",
+	email: "email@gmail.com".
+	age: 21,
+}
+
+// To assign a type to the user object, you can use interfaces
+interface User {
+	firstName: string;
+	lastName: string;
+	email: string;
+	age: number;
+}
+```
+
+### You can use interfaces to aggregate data. You can use interfaces to implement classes from.
+
+## Types:
+### Very similar to interfaces , types let you aggregate data together.
+```
+type User = {
+	firstName: string;
+	lastName: string;
+	age: number
+}
+```
+### But they let you do a few other things -
+#### 1. Unions - Let’s say you want to print the id of a user, which can be a number or a string.
+```
+type StringOrNumber = string | number;
+
+function printId(id: StringOrNumber) {
+  console.log(`ID: ${id}`);
+}
+
+printId(101); // ID: 101
+printId("202"); // ID: 202
+```
+#### 2. Intersection - What if you want to create a type that has every property of multiple types/ interfaces
+```
+type Employee = {
+  name: string;
+  startDate: Date;
+};
+
+type Manager = {
+  name: string;
+  department: string;
+};
+
+type TeamLead = Employee & Manager;
+
+const teamLead: TeamLead = {
+  name: "harkirat",
+  startDate: new Date(),
+  department: "Software developer"
+};
+```
