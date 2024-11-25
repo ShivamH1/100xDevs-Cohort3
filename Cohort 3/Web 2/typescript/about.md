@@ -1,3 +1,16 @@
+## Compile languages and Interpreted languages:
+### Note - Compiler has some rule defined and when the file is compiled it checks for errors and warnings is shown and file is not converted to a binary or js file incase of typescript. The compiler doesn't run your code it checks for error based on the rule defined.
+### Example - a.cpp -> compiling (compile time errors) -> a.out -> then you run(runtime errors). If there's any error during compiling they are compile time errors. And the error when you run the code they are runtime errors.
+
+### Note - Interpreted (Non compile) here the code is directly run line by line in the browser/nodejs runtime. There is no compilation step. The code is directly executed. 
+### In interpreted languages, the code is directly run in the browser/nodejs runtime without any compilation step. The code is executed line by line. So all errors are runtime errors.
+### Example - a.py -> compile and run line by line -> a.out if any run time errors.
+
+## Strongly typed and losely typed:
+### The terms strongly typed and loosely typed refer to how programming languages handle types, particularly how strict they are about type conversions and type safety.
+### Examples - Java, C++, C, Rust are strongly typed and Python, Javascript, Perl, php are losely typed.
+
+### People realised that javascript is a very power language, but lacks types. Typescript was introduced as a new language to add types on top of javascript.
 # TypeScript
 
 ## What is typescript?
@@ -15,3 +28,8 @@ There are many other famous compilers/transpilers for converting Typescript to J
 esbuild
 swc
 
+### Steps of execution: main.ts -> tsc(compile/converted) -> main.js => browser/nodejs runtime. 
+### This is the high level benefit of typescript. It lets you catch type errors at compile time
+
+## Typescript provides you some basic types - number, string, boolean, null, undefined, etc.
+### You should try to avoid the usage of any, because if using any cause the problem of type safety. If we want for say number and string then write as number | string.
