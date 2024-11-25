@@ -25,9 +25,25 @@ function runafterone(fn) {
 runafterone(function () {
     console.log("Hello");
 });
+function delayedCall(anotherFn) {
+    setTimeout(anotherFn, 1000);
+}
+function log() {
+    console.log("Function called");
+    return 1;
+}
+delayedCall(log);
 function multiple(fn) {
     return fn(1, 2);
 }
 console.log(multiple((a, b) => {
     return a * b;
+}));
+function isLegalUser(user) {
+    return user.age > 18 ? true : false;
+}
+console.log(isLegalUser({
+    firstName: "John",
+    lastName: "Doe",
+    age: 25,
 }));

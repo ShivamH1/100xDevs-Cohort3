@@ -51,3 +51,21 @@ function multiple(fn: (a: number, b: number) => number): number {
 console.log(multiple((a: number, b: number): number => {
   return a * b;
 }));
+
+//Interface:
+
+interface User {
+  firstName: string,
+  lastName: string,
+  age: number,
+}
+
+function isLegalUser(user: User): boolean {
+  return user.age > 18 ? true : false;
+}
+
+console.log(isLegalUser({
+  firstName: "John",
+  lastName: "Doe",
+  age: 25,
+}));
