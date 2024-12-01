@@ -14,7 +14,7 @@ function greet(username: string) {
 
 greet("Shivam");
 
-function sumOf(a: number, b: number):number {
+function sumOf(a: number, b: number): number {
   return a + b;
 }
 
@@ -33,13 +33,13 @@ runafterone(function () {
   console.log("Hello");
 });
 
-function delayedCall(anotherFn: () => number){
-    setTimeout(anotherFn, 1000);
+function delayedCall(anotherFn: () => number) {
+  setTimeout(anotherFn, 1000);
 }
 
-function log(){
-    console.log("Function called");
-    return 1;
+function log() {
+  console.log("Function called");
+  return 1;
 }
 
 delayedCall(log);
@@ -48,24 +48,73 @@ function multiple(fn: (a: number, b: number) => number): number {
   return fn(1, 2);
 }
 
-console.log(multiple((a: number, b: number): number => {
+let ans: number = multiple((a: number, b: number): number => {
   return a * b;
-}));
+});
+console.log(ans);
 
 //Interface:
 
 interface User {
-  firstName: string,
-  lastName: string,
-  age: number,
+  firstName: string;
+  lastName: string;
+  age: number;
+  address?: {
+    city: string;
+    country: string;
+    pincode: number;
+  };
 }
+//?: means optional
 
 function isLegalUser(user: User): boolean {
   return user.age > 18 ? true : false;
 }
 
-console.log(isLegalUser({
+let result: boolean = isLegalUser({
   firstName: "John",
   lastName: "Doe",
   age: 25,
-}));
+  address: {
+    city: "New York",
+    country: "USA",
+    pincode: 10001,
+  },
+});
+
+console.log(result);
+
+// using Address interface as a resuable type for Home and Office 
+interface Address {
+  city: string;
+  country: string;
+  pincode: number;
+}
+
+interface Home {
+  name : string;
+  address : Address;
+}
+
+interface Office {
+  name : string;
+  address : Address;
+}
+
+interface People {
+  name : string;
+  age : number;
+  greet : () => string;
+  // or greet() : string;
+}
+
+let person: People = {
+  name : 'John',
+  age : 24,
+  greet : () => {
+    return "Hello"
+  },
+}
+
+let greeting = person.greet();
+console.log(greeting);

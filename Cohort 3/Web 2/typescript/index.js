@@ -36,14 +36,21 @@ delayedCall(log);
 function multiple(fn) {
     return fn(1, 2);
 }
-console.log(multiple((a, b) => {
+let ans = multiple((a, b) => {
     return a * b;
-}));
+});
+console.log(ans);
 function isLegalUser(user) {
     return user.age > 18 ? true : false;
 }
-console.log(isLegalUser({
+let result = isLegalUser({
     firstName: "John",
     lastName: "Doe",
     age: 25,
-}));
+    address: {
+        city: "New York",
+        country: "USA",
+        pincode: 10001,
+    },
+});
+console.log(result);
