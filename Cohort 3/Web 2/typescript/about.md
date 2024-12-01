@@ -62,6 +62,36 @@ interface User {
 	age: number;
 }
 ```
+### Interfaces have another special property. You can implement interfaces as a class.
+#### Let’s say you have an personinterface - 
+```
+interface Person {
+    name: string;
+    age: number;
+    greet(phrase: string): void;
+}
+```
+#### You can create a class which implements this interface.
+```
+class Employee implements Person {
+    name: string;
+    age: number;
+
+    constructor(n: string, a: number) {
+        this.name = n;
+        this.age = a;
+    }
+
+    greet(phrase: string) {
+        console.log(`${phrase} ${this.name}`);
+    }
+}
+```
+#### This is useful since now you can create multiple variants of a person (Manager, CEO …)
+
+### Summary - 
+#### You can use interfaces to aggregate data
+#### You can use interfaces to implement classes from
 
 ### You can use interfaces to aggregate data. You can use interfaces to implement classes from.
 
