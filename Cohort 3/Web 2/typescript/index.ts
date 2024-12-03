@@ -71,18 +71,18 @@ function isLegalUser(user: User): boolean {
   return user.age > 18 ? true : false;
 }
 
-let result: boolean = isLegalUser({
-  firstName: "John",
-  lastName: "Doe",
-  age: 25,
-  address: {
-    city: "New York",
-    country: "USA",
-    pincode: 10001,
-  },
-});
+// let result: boolean = isLegalUser({
+//   firstName: "John",
+//   lastName: "Doe",
+//   age: 25,
+//   address: {
+//     city: "New York",
+//     country: "USA",
+//     pincode: 10001,
+//   },
+// });
 
-console.log(result);
+// console.log(result);
 
 // using Address interface as a resuable type for Home and Office 
 interface Address {
@@ -154,5 +154,27 @@ class Rectangle implements Shape {
 
   area = () => {
     console.log('Area of Rectangle: ', this.width * this.height);
+  }
+}
+
+abstract class User {
+  name : string;
+  constructor(name: string){
+    this.name = name;
+  }
+  abstract greet() : string;
+  hello(){
+    console.log(`Hello, I am ${this.name}`);
+  }
+}
+
+class Employee extends User {
+  name : string;
+  constructor(name: string){
+    super(name);
+    this.name = name;
+  }
+  greet() : string {
+    return `Hello, I am ${this.name}. I am an Employee`;
   }
 }

@@ -136,3 +136,9 @@ const teamLead: TeamLead = {
   department: "Software developer"
 };
 ```
+
+### Difference between interfaces and classes and abstract classes:
+#### - **Interfaces**: Define a contract that can be implemented by classes. They cannot contain any implementation code.
+#### - **Classes**: Blueprint for creating objects. They can have properties and methods with implementation.
+#### - **Abstract Classes**: Serve as a base class that cannot be instantiated on its own. They can have both fully implemented methods and abstract methods that must be implemented by derived classes.
+
