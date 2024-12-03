@@ -118,3 +118,41 @@ let person: People = {
 
 let greeting = person.greet();
 console.log(greeting);
+
+// class Shape {
+//   area () {
+//     console.log('hit area');
+//   }
+// }
+
+// class Rectangle extends Shape {
+//   width : number;
+//   height : number;
+
+//   constructor {
+//     super(); // always call super() first because it will call the parent class constructor.
+//     this.width = 10;
+//     this.height = 5;
+//   }
+// }
+
+// const r = new Rectangle();
+// r.area()
+
+interface Shape {
+  area: () => void;
+}
+
+class Rectangle implements Shape {
+  width: number;
+  height: number;
+
+  constructor(width: number, height: number) {
+    this.width = width;
+    this.height = height;
+  }
+
+  area = () => {
+    console.log('Area of Rectangle: ', this.width * this.height);
+  }
+}
