@@ -40,6 +40,7 @@ let ans = multiple((a, b) => {
     return a * b;
 });
 console.log(ans);
+
 function isLegalUser(user) {
     return user.age > 18 ? true : false;
 }

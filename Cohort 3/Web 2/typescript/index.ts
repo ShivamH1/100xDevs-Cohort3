@@ -71,19 +71,6 @@ function isLegalUser(user: User): boolean {
   return user.age > 18 ? true : false;
 }
 
-let result: boolean = isLegalUser({
-  firstName: "John",
-  lastName: "Doe",
-  age: 25,
-  address: {
-    city: "New York",
-    country: "USA",
-    pincode: 10001,
-  },
-});
-
-console.log(result);
-
 // using Address interface as a resuable type for Home and Office 
 interface Address {
   city: string;
@@ -117,4 +104,3 @@ let person: People = {
 }
 
 let greeting = person.greet();
-console.log(greeting);
