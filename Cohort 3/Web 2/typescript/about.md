@@ -142,3 +142,65 @@ const teamLead: TeamLead = {
 #### - **Classes**: Blueprint for creating objects. They can have properties and methods with implementation.
 #### - **Abstract Classes**: Serve as a base class that cannot be instantiated on its own. They can have both fully implemented methods and abstract methods that must be implemented by derived classes.
 
+### Note: The main difference between interfaces and types is that interfaces are limited to only describing an object's shape, while types can describe any type of value. You can also implement a inteface for class but you can't with types. Types let's yo do union and intersection.
+
+## Arrays:
+### If you want to access arrays in typescript, it’s as simple as adding a [] annotation next to the type
+#### Example: Given an array of positive integers as input, return the maximum value in the array
+```
+function maxValue(arr: number[]) {
+    let max = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > max) {
+            max = arr[i]
+        }
+    }
+    return max;
+}
+
+console.log(maxValue([1, 2, 3]));
+```
+
+### Note:
+In TypeScript, the concepts of "union" and "intersection" types might seem counterintuitive at first, but they serve different purposes:
+
+1. **Union Types (`|`)**:
+   - A union type allows a value to be of one of several types. It represents a value that can be any of multiple types, effectively forming a set of types that a variable can accept.
+   - Example:
+     ```typescript
+     type StringOrNumber = string | number;
+
+     function formatId(id: StringOrNumber) {
+       if (typeof id === "string") {
+         console.log(`ID (string): ${id}`);
+       } else {
+         console.log(`ID (number): ${id}`);
+       }
+     }
+     
+     formatId(123);   // ID (number): 123
+     formatId("abc"); // ID (string): abc
+     ```
+
+2. **Intersection Types (`&`)**:
+   - An intersection type combines multiple types into one. It means that a value must satisfy all the types simultaneously, effectively merging properties from multiple types into a single type.
+   - Example:
+     ```typescript
+     type Person = {
+       name: string;
+     };
+
+     type Employee = {
+       employeeId: number;
+     };
+
+     type EmployeePerson = Person & Employee;
+
+     const employee: EmployeePerson = {
+       name: "Alice",
+       employeeId: 123
+     };
+     ```
+   - In this example, `EmployeePerson` must have all the properties of both `Person` and `Employee`.
+
+#### In summary, a **union type** is like saying "either/or" (e.g., a variable can be of type A or type B), while an **intersection type** is like saying "both/and" (e.g., a variable must have all properties of both type A and type B). Union types provide flexibility, whereas intersection types ensure a more comprehensive structure by combining multiple types.
