@@ -40,7 +40,7 @@ let ans = multiple((a, b) => {
     return a * b;
 });
 console.log(ans);
-//?: means optional
+
 function isLegalUser(user) {
     return user.age > 18 ? true : false;
 }
@@ -55,21 +55,3 @@ let result = isLegalUser({
     },
 });
 console.log(result);
-let person = {
-    name: 'John',
-    age: 24,
-    greet: () => {
-        return "Hello";
-    },
-};
-let greeting = person.greet();
-console.log(greeting);
-class Rectangle {
-    constructor(width, height) {
-        this.area = () => {
-            console.log('Area of Rectangle: ', this.width * this.height);
-        };
-        this.width = width;
-        this.height = height;
-    }
-}
