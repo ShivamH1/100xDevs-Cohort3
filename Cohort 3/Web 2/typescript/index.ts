@@ -178,3 +178,91 @@ class Employee extends User {
     return `Hello, I am ${this.name}. I am an Employee`;
   }
 }
+
+type Employees = {
+  name : string;
+  startDate : string;
+}
+
+type Manager = {
+  name : string;
+  department : string;
+}
+
+type TeamLead = Employees & Manager;
+
+let e : Employees =  {
+  name : "Shivam",
+  startDate : "2022-01-01",
+}
+
+let m : Manager = {
+  name : "Shivam",
+  department : "Wordpress",
+}
+
+let t : TeamLead = {
+  name : "Shivam",
+  startDate : "2022-01-01",
+  department : "Wordpress",
+}
+
+type GoodUser = {
+  name : string;
+  gift : string;
+}
+
+type BadUser = {
+  name : string;
+  ip : string;
+}
+
+type Users = GoodUser | BadUser;
+
+const u1: Users = {
+  name : "John",
+  gift : "Flowers",
+}
+
+const u2 : Users = {
+  name : "Ron",
+  ip : "127.0.0.1",
+}
+
+const u3 : Users = {
+  name : "Cenario",
+  gift : "Chocolates",
+  ip : "127.0.0.2",
+}
+
+function maxValue(arr: number[]) {
+  let max = 0;
+  for (let i = 0; i < arr.length; i++) {
+      if (arr[i] > max) {
+          max = arr[i]
+      }
+  }
+  return max;
+}
+
+console.log(maxValue([1, 2, 3]));
+
+interface Individual {
+	firstName: string;
+	lastName: string;
+	age: number;
+}
+
+function filteredUsers(users: Individual[]) {
+    return users.filter(x => x.age >= 18);
+}
+
+console.log(filteredUsers([{
+    firstName: "harkirat",
+    lastName: "Singh",
+    age: 21
+}, {
+    firstName: "Raman",
+    lastName: "Singh",
+    age: 16
+}, ]));
