@@ -1,6 +1,15 @@
 "use strict";
-function addAge(user1, user2) {
-    return user1.age + user2.age;
+// interface User {
+//     name : string;
+//     age : number;
+// }
+const displayUserProfile = (user) => {
+    console.log(`Name: ${user.name}, Email: ${user.email}`);
+};
+function updatePerson(updatePersonProps) {
+    console.log('Hit THE DB');
 }
-let result = addAge({ name: 'John', age: 21 }, { name: 'Jane', age: 22 });
-console.log(result);
+function updateUser(updatedProps) {
+    // hit the database tp update the user
+}
+updateUser({});
