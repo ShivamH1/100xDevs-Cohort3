@@ -204,3 +204,61 @@ In TypeScript, the concepts of "union" and "intersection" types might seem count
    - In this example, `EmployeePerson` must have all the properties of both `Person` and `Employee`.
 
 #### In summary, a **union type** is like saying "either/or" (e.g., a variable can be of type A or type B), while an **intersection type** is like saying "both/and" (e.g., a variable must have all properties of both type A and type B). Union types provide flexibility, whereas intersection types ensure a more comprehensive structure by combining multiple types.
+
+# Hard TypeScript:
+
+## Pick : Pick allows you to create a new type by selecting a set of properties (Keys) from an existing type (Type/Interface).Imagine you have a User model with several properties, but for a user profile display, you only need a subset of these properties.
+
+```
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  createdAt: Date;
+}
+
+// For a profile display, only pick `name` and `email`
+type UserProfile = Pick<User, 'name' | 'email'>;
+
+const displayUserProfile = (user: UserProfile) => {
+  console.log(`Name: ${user.name}, Email: ${user.email}`);
+};
+```
+## Partial : Partial makes all properties of a type optional, creating a type with the same properties, but each marked as optional. Specifically useful when you want to do updates
+
+```
+interface User {
+    id: string;
+    name: string;
+    age: string;
+    email: string;
+    password: string;
+};
+
+type UpdateProps = Pick<User, 'name' | 'age' | 'email'>
+
+type UpdatePropsOptional = Partial<UpdateProps>
+
+function updateUser(updatedProps: UpdatePropsOptional) {
+    // hit the database tp update the user
+}
+updateUser({})
+```
+
+## Readonly - When you have a configuration object that should not be altered after initialization, making it Readonly ensures its properties cannot be changed.
+
+```
+interface Config {
+  readonly endpoint: string;
+  readonly apiKey: string;
+}
+
+const config: Readonly<Config> = {
+  endpoint: 'https://api.example.com',
+  apiKey: 'abcdef123456',
+};
+
+// config.apiKey = 'newkey'; // Error: Cannot assign to 'apiKey' because it is a read-only property.
+```
+### Note - This is compile time checking, not runtime (unlike const)
+
