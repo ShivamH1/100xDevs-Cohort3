@@ -23,11 +23,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModel = void 0;
+exports.ContentModel = exports.UserModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-mongoose_1.default.connect("mongodb+srv://admin:India%40123@100xdev.7gly1js.mongodb.net/brainly");
+mongoose_1.default.connect("mongodb+srv://admin:India%40123@100xdev.7gly1js.mongodb.net/brainly")
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(err => console.error("Error connecting to MongoDB:", err));
 const UserSchema = new mongoose_1.Schema({
     username: { type: String, unique: true },
-    password: String
+    password: String,
 });
 exports.UserModel = (0, mongoose_1.model)("User", UserSchema);
+const ContentSchema = new mongoose_1.Schema({
+    type: String,
+    link: String,
+    title: String,
+    tags: [{ type: mongoose_1.default.Types.ObjectId, ref: 'Tags' }],
+    userId: { type: mongoose_1.default.Types.ObjectId, ref: 'User' }
+});
+exports.ContentModel = (0, mongoose_1.model)("Content", ContentSchema);
