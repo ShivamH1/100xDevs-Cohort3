@@ -75,41 +75,57 @@ app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
 }));
 app.post("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { type, link, title } = req.body;
-    const content = yield db_1.ContentModel.create({
-        type,
-        link,
-        title,
-        //@ts-ignore
-        userId: req.userId,
-        tags: [],
-    });
-    res.json({
-        message: "Content Addded",
-        content,
-    });
+    try {
+        const content = yield db_1.ContentModel.create({
+            type,
+            link,
+            title,
+            //@ts-ignore
+            userId: req.userId,
+            tags: [],
+        });
+        res.json({
+            message: "Content Addded",
+            content,
+        });
+    }
+    catch (e) {
+        res.status(400).json({ message: "Failed to add the content" });
+    }
 }));
 app.get("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //@ts-ignore
     const userId = req.userId;
-    //usage of references (foreign keys)
-    const contents = yield db_1.ContentModel.find({ userId }).populate("userId", "username");
-    res.json({
-        message: "Your content: ",
-        contents,
-    });
+    try {
+        //usage of references (foreign keys)
+        const contents = yield db_1.ContentModel.find({ userId }).populate("userId", "username");
+        res.json({
+            message: "Your content: ",
+            contents,
+        });
+    }
+    catch (e) {
+        res.status(400).json({ message: "Failed to get the content" });
+    }
 }));
 app.delete("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const contentId = req.body.contentId;
-    yield db_1.ContentModel.deleteMany({
-        contentId,
-        //@ts-ignore
-        userId: req.userId,
-    });
-    res.json({
-        message: "Deleted",
-    });
+    try {
+        yield db_1.ContentModel.deleteMany({
+            contentId,
+            //@ts-ignore
+            userId: req.userId,
+        });
+        res.json({
+            message: "Deleted",
+        });
+    }
+    catch (e) {
+        res.status(400).json({ message: "Failed to delete the content" });
+    }
 }));
-app.post("/api/v1/brain/share", (req, res) => { });
+app.post("/api/v1/brain/share", (req, res) => {
+});
 app.get("/api/v1/brain/:shareLink", (req, res) => { });
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
