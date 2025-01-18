@@ -73,3 +73,14 @@ A vector database is a type of NoSQL database that stores data as vectors instea
 - Check if the password is correct using bcrypt.compare() method because we stored the password in the hashed manner.
 - If the user exists and the password is correct, generate a JWT token and send it in the response.
 - If the user does not exist or the password is incorrect, send a 401 status code with an appropriate error message.
+
+### ReactElement Explanation
+
+A ReactElement is a fundamental building block in React applications. It is an object representation of a UI element that describes what should appear on the screen. ReactElements are immutable and are created using the `React.createElement()` method or JSX syntax. They are used by React to efficiently update and render the UI by comparing the current element tree with the previous one, a process known as reconciliation.
+
+Example:
+```jsx
+const element = <h1>Hello, world!</h1>;
+// Equivalent to:
+const element = React.createElement('h1', null, 'Hello, world!');
+```
