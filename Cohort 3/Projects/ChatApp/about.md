@@ -1,0 +1,3 @@
+### (Websocket doesn't broadcast message rather establish one-to-one connection)
+When a client, such as Postman, communicates with the WebSocket server, the message is received by the server and a response is sent directly back to that client, establishing a **one-to-one** interaction. Other clients, like Hopscotch, connected to the same WebSocket server, will not receive this message or the response. To achieve **broadcasting** to all connected clients, the server must individually send the message to each client, resulting in multiple **one-to-one** interactions, rather than a single **one-to-many** broadcast.
+### Now the question how can i broadcast it?
