@@ -2,19 +2,33 @@ import { WebSocketServer, WebSocket } from "ws";
 
 const wss = new WebSocketServer({ port: 8080 });
 
+interface User {
+  socket: WebSocket;
+  room : string;
+}
+
 let clientCount = 0;
-let allSockets: WebSocket[] = [];
+let allSockets: User[] = [];
 
 wss.on("connection", (socket) => {
-  allSockets.push(socket);
-  clientCount++;
-  console.log(`client connected #: ${clientCount}`);
 
   socket.on("message", (message) => {
-    console.log(`received message: ${message.toString()}`);
-    //broadcasting message
-    allSockets.forEach((socket) => {
-      socket.send(message.toString() + " sent from server");
-    });
+    //Here we converted the message/string to object. Message is from the client.
+     const parsedMessage = JSON.parse(message);
+     if (parsedMessage.type === 'join') {
+      allSockets.push({
+        socket: socket,
+        room: parsedMessage.payload.roomId,
+      })
+     }
   });
+
+  socket.on("disconnect", () => {
+    // remove the socket that disconnected from the array of all sockets
+    // this is done by creating a new array that only includes the sockets
+    // that are not equal to the socket that disconnected
+    allSockets = allSockets.filter((s) => s!== socket);
+    clientCount--;
+    console.log(`client disconnected: ${clientCount}`);
+  })
 });
