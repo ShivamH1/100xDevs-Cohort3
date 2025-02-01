@@ -19,6 +19,7 @@ wss.on("connection", (socket) => {
 
     // If the message is a 'join' message
     if (parsedMessage.type === "join") {
+      console.log("Joined Room");
       // Add the socket to the array of all sockets
       // and assign it to the room specified in the message
       allSockets.push({
@@ -29,22 +30,26 @@ wss.on("connection", (socket) => {
 
     // If the message is a 'chat' message
     if (parsedMessage.type === "chat") {
+      console.log("Received chat message");
       // Find the room that the current client is in
       // by finding the socket in the array of all sockets
       const currentClientRoom = allSockets.find(
         (x) => x.socket === socket
       )?.room;
+      console.log(`Sending message to room: ${currentClientRoom}`);
 
       // Find all the sockets that are in the same room as the current client
       const socketsInCurrentRoom = allSockets.filter(
         (s) => s.room === currentClientRoom
       );
+      console.log(`Number of clients in room: ${socketsInCurrentRoom.length}`);
 
       // Send the message to all the sockets in the same room
       // as the current client
       socketsInCurrentRoom.forEach((s) =>
         s.socket.send(parsedMessage.payload.message)
       );
+      console.log(`Sent message to ${socketsInCurrentRoom.length} clients`);
     }
   });
 
