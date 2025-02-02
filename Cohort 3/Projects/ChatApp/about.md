@@ -37,3 +37,32 @@ wss.on("connection", (socket) => {
   })
 });
 ```
+
+#### Note: Not related to websocket but what is the need of cleanup in useEffect or setTimeout?
+In React, cleanup functions are necessary in `useEffect` to prevent memory leaks and ensure that side effects are properly managed. When using `setTimeout` or `setInterval`, it's important to clear these timers when the component unmounts or when the effect is re-run, to avoid executing code after a component is no longer in use.
+
+Example of cleanup in `useEffect` with `setInterval`:
+
+```jsx
+import React, { useEffect, useState } from 'react';
+
+function TimerComponent() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 1000);
+
+    // Cleanup function to clear the interval
+    return () => clearInterval(intervalId);
+  }, []); // Empty dependency array means this effect runs only once on mount
+
+  return <div>Count: {count}</div>;
+}
+
+export default TimerComponent;
+```
+
+In this example, the cleanup function, `clearInterval(intervalId)`, ensures that the interval is cleared when the component unmounts, preventing the timer from continuing to execute in the background.
+
