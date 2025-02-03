@@ -66,3 +66,16 @@ export default TimerComponent;
 
 In this example, the cleanup function, `clearInterval(intervalId)`, ensures that the interval is cleared when the component unmounts, preventing the timer from continuing to execute in the background.
 
+### Fan Out Architecture in websocket:
+In a Fan Out Architecture, when a message is sent to the server, the server broadcasts the message to all the connected clients. This is useful when you want to send the same message to multiple clients, without having to send a separate message to each one. The server acts as a hub, and all the connected clients act as nodes. When a message is received from one of the nodes, the server sends the message to all the other nodes, effectively "fanning out" the message.
+
+For example, in a chat application, when a user sends a message, the server can broadcast the message to all the other users in the same chat room, using the Fan Out Architecture. This way, all the users in the chat room receive the message, without having to send a separate message to each one.
+
+### PubSub:
+PubSub (Publish-Subscribe) is a messaging pattern in which senders of messages, called publishers, do not programatically send their messages to specific receivers, called subscribers. Instead, published messages are characterized into classes or topics without knowledge of which subscribers, if any, there may be. Similarly, subscribers express interest in one or more classes and only receive messages that are of interest, without knowledge of which publishers, if any, there are.
+
+In the context of websockets, PubSub can be used to scale the websocket server. Instead of having a single websocket server that handles all the incoming connections and broadcasts messages to all the connected clients, you can have multiple websocket servers, each handling a subset of the connected clients. When a message is sent to the server, the server publishes the message to a message broker, which then broadcasts the message to all the connected clients, using the Fan Out Architecture. This way, the load on the websocket servers is distributed, and the system can scale more easily.
+
+For example, in a chat application, you can have multiple websocket servers, each handling a subset of the chat rooms. When a message is sent to one of the websocket servers, the server publishes the message to a message broker, which then broadcasts the message to all the other websocket servers that are connected to the same chat room. This way, all the users in the chat room receive the message, without having to send a separate message to each one.
+
+This architecture is useful when you want to scale the websocket server, and you want to ensure that all the connected clients receive the message, even if one of the websocket servers goes down.
