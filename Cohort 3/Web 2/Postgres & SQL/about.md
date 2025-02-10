@@ -119,3 +119,35 @@ WHERE id = 1;
 SELECT * FROM users
 WHERE id = 1;
 ```
+
+### What is sql injection? How does sql injection work?
+
+SQL injection is a type of web application security vulnerability in which an attacker is able to inject malicious SQL code into a web application's database in order to extract or modify data. This can be done by inserting malicious SQL code as user input into a web application's database queries.
+
+For example, if a web application has a signup endpoint that takes a username and password as parameters and inserts them into the database, an attacker could inject malicious SQL code into the username field in order to gain access to the database.
+
+```
+app.post('/signup', (req, res) => {
+  const { username, password } = req.body;
+
+  const query = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
+
+  db.query(query, (err, result) => {
+    if (err) {
+      res.status(500).send('Error signing up');
+    } else {
+      res.send('Signed up successfully');
+    }
+  });
+});
+
+An attacker could send a request with the following body
+{
+  "username": "'; DROP TABLE users; --",
+  "password": "whatever"
+}
+This would result in the following query being executed
+INSERT INTO users (username, password) VALUES (''; DROP TABLE users; --', 'whatever')
+The semicolon is used to separate the two queries, and the -- is used to comment out the rest of the line
+This would result in the users table being dropped, and the attack would be successful
+```
