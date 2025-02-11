@@ -173,3 +173,15 @@ app.post('/signup', (req, res) => {
   });
 });
 ```
+
+### How do we scale sql database?
+
+There are several ways to scale a SQL database:
+
+1. **Vertical Scaling**: Increase the power of the machine that hosts the database. This can be done by increasing the amount of RAM, CPU, or disk storage available to the database.
+2. **Horizontal Scaling**: Increase the number of machines that host the database. This can be done by adding more machines to the cluster, and distributing the load across the machines.
+3. **Sharding**: Divide the database into smaller pieces, called shards, and distribute them across multiple machines. Each shard contains a portion of the data.
+4. **Replication**: Create a copy of the database on multiple machines. If one machine fails, the other machines can still serve requests.
+5. **Connection Pooling**: Create a pool of connections to the database that can be reused by multiple requests. This can help reduce the load on the database.
+6. **Caching**: Store frequently accessed data in memory, so that it can be retrieved quickly without having to query the database.
+7. **Indexing**: Create an index on a column in the database, which can speed up queries that use that column.
