@@ -96,6 +96,7 @@ There are 4 things you’d like to do with a database
 INSERT INTO users (username, email, password)
 VALUES ('username_here', 'user@example.com', 'user_password');
 ```
+
 💡Notice how you didn’t have to specify the id because it auto increments
 
 2. UPDATE
@@ -150,4 +151,25 @@ This would result in the following query being executed
 INSERT INTO users (username, password) VALUES (''; DROP TABLE users; --', 'whatever')
 The semicolon is used to separate the two queries, and the -- is used to comment out the rest of the line
 This would result in the users table being dropped, and the attack would be successful
+```
+
+How do we prevent SQL injection?
+
+```
+app.post('/signup', (req, res) => {
+  const { username, password } = req.body;
+
+  const query = {
+    text: `INSERT INTO users (username, password) VALUES ($1, $2)`,
+    values: [username, password]
+  };
+
+  db.query(query, (err, result) => {
+    if (err) {
+      res.status(500).send('Error signing up');
+    } else {
+      res.send('Signed up successfully');
+    }
+  });
+});
 ```
