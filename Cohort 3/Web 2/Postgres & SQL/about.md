@@ -185,3 +185,37 @@ There are several ways to scale a SQL database:
 5. **Connection Pooling**: Create a pool of connections to the database that can be reused by multiple requests. This can help reduce the load on the database.
 6. **Caching**: Store frequently accessed data in memory, so that it can be retrieved quickly without having to query the database.
 7. **Indexing**: Create an index on a column in the database, which can speed up queries that use that column.
+
+### Relationships: Relationships let you store data in different tables and relate it with each other.
+
+Relationships in MongoDB - Since MongoDB is a NoSQL database, you can store any shape of data in it. For instance, if you need to store a user's details along with their address, you can store it in an object that includes the address details.
+
+Relationships in SQL - Since SQL cannot store objects in the same flexible way, we need to define two different tables to represent this data:
+
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE addresses (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    street VARCHAR(255) NOT NULL,
+    pincode VARCHAR(20),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+```
+
+##### ON DELETE CASCADE - means to delete the address if user is removed.
+
+##### ON DELETE RESTRICT - means to in order to delete the user first remove all addresses.
+
+This demonstrates a relationship, in which the addresses table is related to the users table. When defining the table, you must specify the relationship.
+
