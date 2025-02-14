@@ -32,7 +32,7 @@ app.post("/signup", async (req: express.Request, res: express.Response) => {
   const { username, password, email, city, country, street, pincode } =
     req.body;
   try {
-    const insertQuery = `INSERT INTO users (username, password, email) VALUES ($1, $2, $3);`;
+    const insertQuery = `INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING *;`;
 
     const response = await pgClient.query(insertQuery, [
       username,
@@ -42,7 +42,7 @@ app.post("/signup", async (req: express.Request, res: express.Response) => {
 
     const addressInsertQuery = `INSERT INTO address (city, street, pincode, country, userId) VALUES ($1, $2, $3, $4, $5);`;
 
-    const responseAddress = await pgClient.query(addressInsertQuery, [
+    await pgClient.query(addressInsertQuery, [
       city,
       street,
       pincode,
