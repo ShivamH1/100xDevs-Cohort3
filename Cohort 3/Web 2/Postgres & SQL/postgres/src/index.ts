@@ -93,13 +93,49 @@ app.get("/metadata", async (req, res) => {
 // Better Approach using Joins
 app.get("/metadata/joins", async (req, res) => {
   const id = req.query.id;
-  const query = `
-    SELECT u.username, u.email, a.*
+
+  const defaultQuery = ` SELECT u.username, u.email, a.*
     FROM users u
     JOIN addresses a ON u.id = a.user_id
     WHERE u.id = $1;
   `;
-  const response = await pgClient.query(query, [id]);
+
+  // INNER JOIN returns records that have matching values in both tables
+  // Use case: Find all users with their respective addresses
+  const INNER_JOIN_Query = `EXPLAIN SELECT u.username, u.email, a.*
+    FROM users u
+    INNER JOIN addresses a ON u.id = a.user_id
+    WHERE u.id = $1;`;
+
+  // LEFT JOIN returns all records from the left table (users), and the matched records from the right table (addresses)
+  // Use case: Find all users, even if they don't have an address
+  const LEFT_JOIN_Query = `EXPLAIN SELECT u.username, u.email, a.*
+    FROM users u
+    LEFT JOIN addresses a ON u.id = a.user_id
+    WHERE u.id = $1;`;
+
+  // RIGHT JOIN returns all records from the right table (addresses), and the matched records from the left table (users)
+  // Use case: Find all addresses, even if they are not linked to a user
+  const RIGHT_JOIN_Query = `EXPLAIN SELECT u.username, u.email, a.*
+    FROM users u
+    RIGHT JOIN addresses a ON u.id = a.user_id
+    WHERE u.id = $1;`;
+
+  // FULL JOIN returns all records when there is a match in either left (users) or right (addresses) table records
+  // Use case: Find all users and addresses, regardless of whether they are linked or not
+  const FULL_JOIN_Query = `EXPLAIN SELECT u.username, u.email, a.*
+    FROM users u
+    FULL JOIN addresses a ON u.id = a.user_id
+    WHERE u.id = $1;`;
+
+  // CROSS JOIN returns the Cartesian product of the rows from the tables in the join
+  // Use case: Find all possible combinations of users and addresses
+  const CROSS_JOIN_Query = `EXPLAIN SELECT u.username, u.email, a.*
+    FROM users u
+    CROSS JOIN addresses a
+    WHERE u.id = $1;`;
+
+  const response = await pgClient.query(defaultQuery, [id]);
   res.json({ join: response.rows });
 });
 
