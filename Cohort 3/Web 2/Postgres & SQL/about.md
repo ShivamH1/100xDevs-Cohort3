@@ -213,9 +213,178 @@ CREATE TABLE addresses (
 );
 ```
 
-##### ON DELETE CASCADE - means to delete the address if user is removed.
+##### ON DELETE CASCADE - deletes the address if the user is removed.
 
-##### ON DELETE RESTRICT - means to in order to delete the user first remove all addresses.
+##### ON DELETE RESTRICT - requires removing all addresses before deleting the user.
 
-This demonstrates a relationship, in which the addresses table is related to the users table. When defining the table, you must specify the relationship.
+This illustrates a relationship, where the addresses table is linked to the users table. When defining the table, you must declare the relationship.
 
+### Transactions:
+
+A relevant question here is what happens when the user signs up and submits both their information and address in a single request.
+Do we execute two separate SQL queries in the database? What if one of the queries (e.g., the address query) fails?
+This is where transactions in SQL are essential to ensure that both the user information and address are either fully saved or not saved at all.
+
+SQL querie:
+
+```
+BEGIN; -- Start transaction
+
+INSERT INTO users (username, email, password)
+VALUES ('john_doe', 'john_doe1@example.com', 'securepassword123');
+
+INSERT INTO addresses (user_id, city, country, street, pincode)
+VALUES (currval('users_id_seq'), 'New York', 'USA', '123 Broadway St', '10001');
+
+COMMIT;
+```
+
+NodeJs:
+
+```
+import { Client } from 'pg';
+
+async function insertUserAndAddress(
+    username: string,
+    email: string,
+    password: string,
+    city: string,
+    country: string,
+    street: string,
+    pincode: string
+) {
+    const client = new Client({
+        host: 'localhost',
+        port: 5432,
+        database: 'postgres',
+        user: 'postgres',
+        password: 'mysecretpassword',
+    });
+
+    try {
+        await client.connect();
+
+        // Start transaction
+        await client.query('BEGIN');
+
+        // Insert user
+        const insertUserText = `
+            INSERT INTO users (username, email, password)
+            VALUES ($1, $2, $3)
+            RETURNING id;
+        `;
+        const userRes = await client.query(insertUserText, [username, email, password]);
+        const userId = userRes.rows[0].id;
+
+        // Insert address using the returned user ID
+        const insertAddressText = `
+            INSERT INTO addresses (user_id, city, country, street, pincode)
+            VALUES ($1, $2, $3, $4, $5);
+        `;
+        await client.query(insertAddressText, [userId, city, country, street, pincode]);
+
+        // Commit transaction
+        await client.query('COMMIT');
+
+        console.log('User and address inserted successfully');
+    } catch (err) {
+        await client.query('ROLLBACK'); // Roll back the transaction on error
+        console.error('Error during transaction, rolled back.', err);
+        throw err;
+    } finally {
+        await client.end(); // Close the client connection
+    }
+}
+
+// Example usage
+insertUserAndAddress(
+    'johndoe',
+    'john.doe@example.com',
+    'securepassword123',
+    'New York',
+    'USA',
+    '123 Broadway St',
+    '10001'
+);
+```
+
+### Joins:
+
+Defining relationships is easy.
+What’s hard is joining data from two (or more) tables together.
+For example, if I ask you to fetch me a users details and their address, what SQL would you run?
+
+Bad Approach:
+
+```
+-- Query 1: Fetch user's details
+SELECT id, username, email
+FROM users
+WHERE id = YOUR_USER_ID;
+
+-- Query 2: Fetch user's address
+SELECT city, country, street, pincode
+FROM addresses
+WHERE user_id = YOUR_USER_ID;
+```
+
+Using Joins:
+
+```
+SELECT users.id, users.username, users.email, addresses.city, addresses.country, addresses.street, addresses.pincode
+FROM users
+JOIN addresses ON users.id = addresses.user_id
+WHERE users.id = '1';
+
+
+SELECT u.id, u.username, u.email, a.city, a.country, a.street, a.pincode
+FROM users u
+JOIN addresses a ON u.id = a.user_id
+WHERE u.id = YOUR_USER_ID;
+```
+
+Benefits of using a join -
+Reduced Latency
+Simplified Application Logic
+Transactional Integrity
+
+Types of Joins
+
+1. INNER JOIN
+   Returns rows when there is at least one match in both tables. If there is no match, the rows are not returned. It's the most common type of join.
+   Use Case: Find All Users With Their Addresses. If a user hasn’t filled their address, that user shouldn’t be returned
+
+   ```
+   SELECT users.username, addresses.city, addresses.country, addresses.street, addresses.pincode
+   FROM users
+   INNER JOIN addresses ON users.id = addresses.user_id;
+   ```
+
+2. LEFT JOIN
+   Returns all rows from the left table, and the matched rows from the right table.
+   Use case - To list all users from your database along with their address information (if they've provided it), you'd use a LEFT JOIN. Users without an address will still appear in your query result, but the address fields will be NULL for them.
+
+   ```
+   SELECT users.username, addresses.city, addresses.country, addresses.street, addresses.pincode
+   FROM users
+   LEFT JOIN addresses ON users.id = addresses.user_id;
+   ```
+
+3. RIGHT JOIN
+   Returns all rows from the right table, and the matched rows from the left table.
+   Use case - Given the structure of the database, a RIGHT JOIN would be less common since the addresses table is unlikely to have entries not linked to a user due to the foreign key constraint. However, if you had a situation where you start with the addresses table and optionally include user information, this would be the theoretical use case.
+
+   ```
+   SELECT users.username, addresses.city, addresses.country, addresses.street, addresses.pincode
+   FROM users
+   RIGHT JOIN addresses ON users.id = addresses.user_id;
+   ```
+
+4. FULL JOIN
+   Returns rows when there is a match in one of the tables. It effectively combines the results of both LEFT JOIN and RIGHT JOIN.
+   Use case - A FULL JOIN would combine all records from both users and addresses, showing the relationship where it exists. Given the constraints, this might not be as relevant because every address should be linked to a user, but if there were somehow orphaned records on either side, this query would reveal them.
+   ```
+   SELECT users.username, addresses.city, addresses.country, addresses.street, addresses.pincode
+   FROM users
+   FULL JOIN addresses ON users.id = addresses.user_id;
+   ```
