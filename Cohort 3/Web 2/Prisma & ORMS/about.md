@@ -31,3 +31,15 @@ User.find({
 3. Type safety/Auto completion
 
 4. Automatic migrations
+
+### What is Prisma?
+
+Prisma is next generation NodeJS and TypeScript ORM. Thanks to its intuitive data model, automatic migrations, type safety and auto completion.
+
+1. Data model
+   In a single file, define your schema. What it looks like, what tables you have, what field each table has, how are rows related to each other.
+2. Automated migrations
+   Prisma generates and runs database migrations based on changes to the Prisma schema.
+3. Type Safety
+   Prisma generates a type-safe database client based on the Prisma schema.
+
