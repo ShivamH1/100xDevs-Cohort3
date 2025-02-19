@@ -43,3 +43,10 @@ Prisma is next generation NodeJS and TypeScript ORM. Thanks to its intuitive dat
 3. Type Safety
    Prisma generates a type-safe database client based on the Prisma schema.
 
+##### Command to fix the node_modules by deleting and reinstalling node_modules:
+```
+rm -rf node_modules package-lock.json
+npm install
+npm run dev
+```
+
