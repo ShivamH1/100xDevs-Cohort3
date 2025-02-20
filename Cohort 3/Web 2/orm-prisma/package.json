@@ -11,6 +11,7 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^6.4.0",
     "@types/node": "^22.13.4",
     "prisma": "^6.4.0",
     "ts-node": "^10.9.2",
