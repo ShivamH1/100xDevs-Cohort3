@@ -44,9 +44,64 @@ Prisma is next generation NodeJS and TypeScript ORM. Thanks to its intuitive dat
    Prisma generates a type-safe database client based on the Prisma schema.
 
 ##### Command to fix the node_modules by deleting and reinstalling node_modules:
+
 ```
 rm -rf node_modules package-lock.json
 npm install
 npm run dev
 ```
 
+### Note:
+
+Two common commands used in prisma are:
+
+1. prisma generate - `npx prisma generate`
+2. prisma migrate dev - `npx prisma migrate dev`
+
+We can also write raw queries in prisma using client.$queryRaw("Select \* from prisma"). - but no need of this
+
+### What is Client in prisma?
+
+Client represents all the functions that convert Prisma queries into SQL queries.
+
+```
+User.create({email: "harkirat@gmail.com"})
+```
+
+To
+
+```
+INSERT INTO users VALUES ...
+```
+
+### What is a foreign key, restrict and cascade?
+
+ALTER TABLE "Todo" ADD CONSTRAINT "Todo_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id")
+ON DELETE RESTRICT
+ON UPDATE CASCADE;
+
+This line of SQL is adding a foreign key constraint to the "Todo" table. The foreign key is
+on the "userId" column of the "Todo" table, and is referencing the "id" column of the "User" table.
+The "ON DELETE RESTRICT" and "ON UPDATE CASCADE" clauses are specifying that if the referenced
+"User" is deleted, the corresponding "Todo" rows should not be deleted (hence RESTRICT), but
+if the referenced "User" is updated, the corresponding "Todo" rows should be updated automatically
+to reflect the change in the referenced "User" (hence CASCADE).
+
+### Relationships in prisma/postgresql:
+
+Prisma let’s you define relationships to relate tables with each other.
+There are 4 types of relationships:
+
+1. One to One
+2. One to Many
+3. Many to One
+4. Many to Many
+
+### Note -
+
+```
+const client = new PrismaClient({
+  log: ["query", "info", "warn", "error"],
+});
+```
+using log: ["query", "info", "warn", "error"] we can see the queries that are being executed.
