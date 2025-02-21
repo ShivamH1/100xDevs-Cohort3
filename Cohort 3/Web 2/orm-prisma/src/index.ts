@@ -1,1 +1,3 @@
-console.log("prisma setup");
+import { PrismaClient } from "@prisma/client";
+
+const client = new PrismaClient();

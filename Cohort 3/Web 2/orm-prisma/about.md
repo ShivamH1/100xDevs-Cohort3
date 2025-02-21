@@ -44,9 +44,32 @@ Prisma is next generation NodeJS and TypeScript ORM. Thanks to its intuitive dat
    Prisma generates a type-safe database client based on the Prisma schema.
 
 ##### Command to fix the node_modules by deleting and reinstalling node_modules:
+
 ```
 rm -rf node_modules package-lock.json
 npm install
 npm run dev
 ```
 
+### Note:
+
+Two common commands used in prisma are:
+
+1. prisma generate - `npx prisma generate`
+2. prisma migrate dev - `npx prisma migrate dev`
+
+We can also write raw queries in prisma using client.$queryRaw("Select * from prisma"). - but no need of this
+
+### What is Client in prisma?
+
+Client represents all the functions that convert Prisma queries into SQL queries.
+
+```
+User.create({email: "harkirat@gmail.com"})
+```
+
+To
+
+```
+INSERT INTO users VALUES ...
+```
