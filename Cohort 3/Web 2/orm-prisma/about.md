@@ -73,3 +73,15 @@ To
 ```
 INSERT INTO users VALUES ...
 ```
+
+### What is a foreign key, restrict and cascade?
+ALTER TABLE "Todo" ADD CONSTRAINT "Todo_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id")
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE;
+
+This line of SQL is adding a foreign key constraint to the "Todo" table. The foreign key is
+on the "userId" column of the "Todo" table, and is referencing the "id" column of the "User" table.
+The "ON DELETE RESTRICT" and "ON UPDATE CASCADE" clauses are specifying that if the referenced
+"User" is deleted, the corresponding "Todo" rows should not be deleted (hence RESTRICT), but
+if the referenced "User" is updated, the corresponding "Todo" rows should be updated automatically
+to reflect the change in the referenced "User" (hence CASCADE).
