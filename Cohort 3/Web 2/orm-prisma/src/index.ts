@@ -20,8 +20,8 @@ async function createUser() {
 
 async function getUser() {
   try {
-    const user = await client.user.findUnique({
-      where: { username: "testuser" },
+    const user = await client.user.findFirst({
+      where: { id: 1 },
     });
     console.log("user found", user);
   }catch (error) {
@@ -32,7 +32,7 @@ async function getUser() {
 async function updateUser() {
   try {
     const user = await client.user.update({
-      where: { username: "testuser" },
+      where: { id: 1 },
       data: { age: "31" },
     });
     console.log("user updated", user);
@@ -44,7 +44,7 @@ async function updateUser() {
 async function deleteUser() {
   try {
     const user = await client.user.delete({
-      where: { username: "testuser" },
+      where: { id: 1 },
     });
     console.log("user deleted", user);
   } catch (error) {
@@ -58,3 +58,5 @@ async function main() {
   await updateUser();
   await deleteUser();
 }
+
+main();

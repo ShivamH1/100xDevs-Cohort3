@@ -33,7 +33,7 @@ function getUser() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = yield client.user.findUnique({
-                where: { username: "testuser" },
+                where: { id: 1 },
             });
             console.log("user found", user);
         }
@@ -46,7 +46,7 @@ function updateUser() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = yield client.user.update({
-                where: { username: "testuser" },
+                where: { id: 1 },
                 data: { age: "31" },
             });
             console.log("user updated", user);
@@ -60,7 +60,7 @@ function deleteUser() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = yield client.user.delete({
-                where: { username: "testuser" },
+                where: { id: 1 },
             });
             console.log("user deleted", user);
         }
@@ -71,9 +71,10 @@ function deleteUser() {
 }
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield createUser();
+        // await createUser();
         yield getUser();
         yield updateUser();
         yield deleteUser();
     });
 }
+main();
