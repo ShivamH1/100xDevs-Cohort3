@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 
 const client = new PrismaClient({
-  log: ["query", "info", "warn", "error"],});
+  log: ["query", "info", "warn", "error"],
+});
 
 async function createUser() {
   try {
@@ -25,7 +26,7 @@ async function getUser() {
       where: { id: 2 },
     });
     console.log("user found", user);
-  }catch (error) {
+  } catch (error) {
     console.error("Error finding user:", error);
   }
 }

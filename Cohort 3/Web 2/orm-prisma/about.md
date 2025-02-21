@@ -96,3 +96,12 @@ There are 4 types of relationships:
 2. One to Many
 3. Many to One
 4. Many to Many
+
+### Note -
+
+```
+const client = new PrismaClient({
+  log: ["query", "info", "warn", "error"],
+});
+```
+using log: ["query", "info", "warn", "error"] we can see the queries that are being executed.
