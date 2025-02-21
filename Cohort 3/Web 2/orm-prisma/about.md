@@ -58,7 +58,7 @@ Two common commands used in prisma are:
 1. prisma generate - `npx prisma generate`
 2. prisma migrate dev - `npx prisma migrate dev`
 
-We can also write raw queries in prisma using client.$queryRaw("Select * from prisma"). - but no need of this
+We can also write raw queries in prisma using client.$queryRaw("Select \* from prisma"). - but no need of this
 
 ### What is Client in prisma?
 
@@ -75,9 +75,10 @@ INSERT INTO users VALUES ...
 ```
 
 ### What is a foreign key, restrict and cascade?
+
 ALTER TABLE "Todo" ADD CONSTRAINT "Todo_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id")
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE;
+ON DELETE RESTRICT
+ON UPDATE CASCADE;
 
 This line of SQL is adding a foreign key constraint to the "Todo" table. The foreign key is
 on the "userId" column of the "Todo" table, and is referencing the "id" column of the "User" table.
@@ -85,3 +86,13 @@ The "ON DELETE RESTRICT" and "ON UPDATE CASCADE" clauses are specifying that if 
 "User" is deleted, the corresponding "Todo" rows should not be deleted (hence RESTRICT), but
 if the referenced "User" is updated, the corresponding "Todo" rows should be updated automatically
 to reflect the change in the referenced "User" (hence CASCADE).
+
+### Relationships in prisma/postgresql:
+
+Prisma let’s you define relationships to relate tables with each other.
+There are 4 types of relationships:
+
+1. One to One
+2. One to Many
+3. Many to One
+4. Many to Many

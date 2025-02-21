@@ -1,12 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 
-const client = new PrismaClient();
+const client = new PrismaClient({
+  log: ["query", "info", "warn", "error"],});
 
 async function createUser() {
   try {
     const user = await client.user.create({
       data: {
-        username: "testuser",
+        username: "testuser2",
         password: "testpassword",
         age: "30",
         city: "New York",
@@ -21,7 +22,7 @@ async function createUser() {
 async function getUser() {
   try {
     const user = await client.user.findFirst({
-      where: { id: 1 },
+      where: { id: 2 },
     });
     console.log("user found", user);
   }catch (error) {
@@ -32,7 +33,7 @@ async function getUser() {
 async function updateUser() {
   try {
     const user = await client.user.update({
-      where: { id: 1 },
+      where: { id: 2 },
       data: { age: "31" },
     });
     console.log("user updated", user);
@@ -44,7 +45,7 @@ async function updateUser() {
 async function deleteUser() {
   try {
     const user = await client.user.delete({
-      where: { id: 1 },
+      where: { id: 2 },
     });
     console.log("user deleted", user);
   } catch (error) {
@@ -53,10 +54,10 @@ async function deleteUser() {
 }
 
 async function main() {
-  await createUser();
+  // await createUser();
   await getUser();
   await updateUser();
-  await deleteUser();
+  // await deleteUser();
 }
 
 main();

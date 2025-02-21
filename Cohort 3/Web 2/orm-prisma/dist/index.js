@@ -10,13 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
-const client = new client_1.PrismaClient();
+const client = new client_1.PrismaClient({
+    log: ["query", "info", "warn", "error"],
+});
 function createUser() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = yield client.user.create({
                 data: {
-                    username: "testuser",
+                    username: "testuser2",
                     password: "testpassword",
                     age: "30",
                     city: "New York",
@@ -32,8 +34,8 @@ function createUser() {
 function getUser() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield client.user.findUnique({
-                where: { id: 1 },
+            const user = yield client.user.findFirst({
+                where: { id: 2 },
             });
             console.log("user found", user);
         }
@@ -46,7 +48,7 @@ function updateUser() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = yield client.user.update({
-                where: { id: 1 },
+                where: { id: 2 },
                 data: { age: "31" },
             });
             console.log("user updated", user);
@@ -60,7 +62,7 @@ function deleteUser() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = yield client.user.delete({
-                where: { id: 1 },
+                where: { id: 2 },
             });
             console.log("user deleted", user);
         }
@@ -74,7 +76,7 @@ function main() {
         // await createUser();
         yield getUser();
         yield updateUser();
-        yield deleteUser();
+        // await deleteUser();
     });
 }
 main();
