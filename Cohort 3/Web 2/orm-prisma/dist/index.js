@@ -8,10 +8,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
+const app = (0, express_1.default)();
 const client = new client_1.PrismaClient({
     log: ["query", "info", "warn", "error"],
+});
+app.get("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield client.user.findMany();
+    res.json({ users: user });
+}));
+app.get("/todos/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const user = yield client.user.findFirst({
+        where: { id: Number(id) },
+        select: { todos: true, username: true, age: true },
+    });
+    res.json({ user });
+}));
+app.listen(3000, () => {
+    console.log("Server is running on port 3000");
 });
 function createUser() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -71,12 +91,43 @@ function deleteUser() {
         }
     });
 }
+function createTodo(userId, title, description) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const todo = yield client.todo.create({
+                data: {
+                    title,
+                    description,
+                    done: false,
+                    // Connect the todo to a user with the given userId
+                    // This creates a relation between the todo and the user
+                    // The todo will be associated with the user, and the user will have a list of todos
+                    user: { connect: { id: userId } },
+                },
+            });
+        }
+        catch (error) { }
+    });
+}
+function getTodos(userId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const todos = yield client.todo.findMany({
+                where: { userId: userId },
+            });
+            console.log("todos found", todos);
+        }
+        catch (error) { }
+    });
+}
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         // await createUser();
-        yield getUser();
-        yield updateUser();
+        // await getUser();
+        // await updateUser();
         // await deleteUser();
+        // await createTodo(2, "Test Todo", "Test Description");
+        // await getTodos(2);
     });
 }
 main();
