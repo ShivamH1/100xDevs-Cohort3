@@ -6,6 +6,7 @@ const client = new PrismaClient({
   log: ["query", "info", "warn", "error"],
 });
 
+// Expressifying prisma
 app.get("/users", async (req, res) => {
   const user = await client.user.findMany();
   res.json({ users: user });
@@ -24,6 +25,7 @@ app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
 
+// Prisma Queries
 async function createUser() {
   try {
     const user = await client.user.create({
