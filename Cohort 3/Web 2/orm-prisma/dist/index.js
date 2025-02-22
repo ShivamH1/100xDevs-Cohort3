@@ -22,13 +22,17 @@ app.get("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield client.user.findMany();
     res.json({ users: user });
 }));
-app.get("/users/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/todos/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const user = yield client.user.findFirst({
         where: { id: Number(id) },
+        select: { todos: true, username: true, age: true },
     });
     res.json({ user });
 }));
+app.listen(3000, () => {
+    console.log("Server is running on port 3000");
+});
 function createUser() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -113,18 +117,17 @@ function getTodos(userId) {
             });
             console.log("todos found", todos);
         }
-        catch (error) {
-        }
+        catch (error) { }
     });
 }
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         // await createUser();
-        yield getUser();
+        // await getUser();
         // await updateUser();
         // await deleteUser();
-        yield createTodo(2, "Test Todo", "Test Description");
-        yield getTodos(2);
+        // await createTodo(2, "Test Todo", "Test Description");
+        // await getTodos(2);
     });
 }
 main();

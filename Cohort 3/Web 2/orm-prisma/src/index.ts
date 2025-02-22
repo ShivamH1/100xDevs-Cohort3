@@ -11,12 +11,17 @@ app.get("/users", async (req, res) => {
   res.json({ users: user });
 });
 
-app.get("/users/:id", async (req, res) => {
+app.get("/todos/:id", async (req, res) => {
   const { id } = req.params;
   const user = await client.user.findFirst({
     where: { id: Number(id) },
+    select: { todos: true, username: true, age: true },
   });
   res.json({ user });
+});
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
 });
 
 async function createUser() {
@@ -89,16 +94,14 @@ async function getTodos(userId: number) {
   try {
     const todos = await client.todo.findMany({
       where: { userId: userId },
-    })
+    });
     console.log("todos found", todos);
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 }
 
 async function main() {
   // await createUser();
-  await getUser();
+  // await getUser();
   // await updateUser();
   // await deleteUser();
   // await createTodo(2, "Test Todo", "Test Description");
