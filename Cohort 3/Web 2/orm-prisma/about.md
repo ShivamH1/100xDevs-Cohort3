@@ -105,3 +105,11 @@ const client = new PrismaClient({
 });
 ```
 using log: ["query", "info", "warn", "error"] we can see the queries that are being executed.
+
+### What is seeding dummy data and its need? run command - npx prisma db seed
+
+Seeding dummy data is the process of adding initial data to a database. This is often done when the database is first created, and can also be used to add sample data to a database that is being demonstrated or tested.
+
+The need for seeding dummy data arises when we want to test our application on a dataset that is representative of real-world data. If we were to use an empty database, our application would not be able to function as expected, as there would be no data to interact with. By seeding the database with dummy data, we can ensure that our application behaves as expected, and that any errors or issues can be identified and fixed.
+
+Dummy data can also be used to populate a database with a large amount of data, which can be useful for performance testing or for demonstrating the scalability of an application.

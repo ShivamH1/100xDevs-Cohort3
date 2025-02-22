@@ -18,6 +18,7 @@ const app = (0, express_1.default)();
 const client = new client_1.PrismaClient({
     log: ["query", "info", "warn", "error"],
 });
+// Expressifying prisma
 app.get("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield client.user.findMany();
     res.json({ users: user });
@@ -33,6 +34,7 @@ app.get("/todos/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* 
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
 });
+// Prisma Queries
 function createUser() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
