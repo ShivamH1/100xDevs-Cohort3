@@ -7,6 +7,18 @@
 - Utilize Auto Scaling Groups
 - Deploy within a Kubernetes Cluster
 
+#### Cloud Servers:
+- Rent virtual machines or containers from cloud providers
+- Can be customized and configured to meet server needs
+- Scalability and flexibility
+- Pay-as-you-go model
+
+#### Hardware Servers: (Not in use)
+- Buy and manage physical servers
+- Can be customized and configured to meet server needs
+- Often require upfront capital expenditures
+- May require additional maintenance and support costs
+
 #### Potential Drawbacks:
 
 - Managing scaling requirements
