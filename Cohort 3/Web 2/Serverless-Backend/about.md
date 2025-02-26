@@ -7,6 +7,20 @@
 - Utilize Auto Scaling Groups
 - Deploy within a Kubernetes Cluster
 
+#### Cloud Servers:
+
+- Rent virtual machines or containers from cloud providers
+- Can be customized and configured to meet server needs
+- Scalability and flexibility
+- Pay-as-you-go model
+
+#### Hardware Servers: (Not in use)
+
+- Buy and manage physical servers
+- Can be customized and configured to meet server needs
+- Often require upfront capital expenditures
+- May require additional maintenance and support costs
+
 #### Potential Drawbacks:
 
 - Managing scaling requirements
@@ -16,14 +30,25 @@
 Imagine a scenario where you only focus on writing code, and all these challenges are managed for you.
 
 ### What are serverless backends?
+
 "Serverless" is a backend deployment in which the cloud provider dynamically manages the allocation and provisioning of servers. The term "serverless" doesn't mean there are no servers involved. Instead, it means that developers and operators do not have to worry about the servers.
 
 #### Easier definition
+
 What if you could just write your express routes and run a command. The app would automatically:
+
 - Deploy
 - Autoscale
 - Charge you on a per request basis (rather than you paying for VMs)
 
 #### Problems with this approach
+
 - More expensive at scale
-- Cold start problem
+- Cold start problem: the delay between when a cloud provider initializes a serverless function to respond to a request and when the function is actually running and ready to respond.
+  To avoid this problem we use a technique called "warm pool". This is a pool of already "warmed up" functions that are ready to be used when a request comes in.
+
+#### When should you use a serverless architecture?
+
+- When you have to get off the ground fast and don’t want to worry about deployments
+- When you can’t anticipate the traffic and don’t want to worry about autoscaling
+- If you have very low traffic and want to optimise for costs
