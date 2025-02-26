@@ -106,6 +106,26 @@ Start the worker locally
 npm run dev
 ```
 
+##### Deploy your application:
+
+- Login to your cloudfare account using wrangler
+
+```
+npx wrangler login
+```
+
+- Check if you are logged in
+
+```
+npx wrangler whoami
+```
+
+- Now deploy your application using wrangler command
+
+```
+npm run deploy
+```
+
 ##### Wrangler:
 
 Wrangler is a command-line tool used for building, deploying, and managing Cloudflare Workers. It simplifies the process of working with Cloudflare's serverless platform by providing various commands to help developers set up their development environment, deploy code, manage configurations, and more. Wrangler integrates with Cloudflare's API to streamline interactions with the Workers runtime and other Cloudflare services.
@@ -127,6 +147,7 @@ Cloudflare expects you to just write the logic to handle a request.
 Creating an HTTP server on top is handled by cloudflare
 
 example:
+
 ```
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
