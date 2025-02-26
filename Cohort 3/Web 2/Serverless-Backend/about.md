@@ -100,3 +100,50 @@ Application types:
 - Queue Consumer & Producer: Workers that interact with queues to process and produce messages for asynchronous task execution.
 - Worker Built from a Template Hosted in Git Repo: A worker application initialized from a predefined template stored in a version control system, facilitating quick deployment.
 
+Start the worker locally
+
+```
+npm run dev
+```
+
+##### Wrangler:
+
+Wrangler is a command-line tool used for building, deploying, and managing Cloudflare Workers. It simplifies the process of working with Cloudflare's serverless platform by providing various commands to help developers set up their development environment, deploy code, manage configurations, and more. Wrangler integrates with Cloudflare's API to streamline interactions with the Workers runtime and other Cloudflare services.
+
+Key features of Wrangler include:
+
+- **Project Initialization**: Easily create new Cloudflare Worker projects with pre-configured templates.
+- **Development Environment**: Run Workers locally for testing and development.
+- **Deployment**: Deploy Worker scripts to Cloudflare's global network with a single command.
+- **Configuration Management**: Manage Worker settings, environment variables, and other configurations via `wrangler.toml`.
+- **TypeScript Support**: Compile TypeScript code to JavaScript for use in Workers.
+- **Integration with Cloudflare Services**: Access and manage Cloudflare KV, Durable Objects, and other services through Wrangler.
+
+With Wrangler, developers can efficiently develop and deploy serverless applications on Cloudflare, leveraging the platform's global reach and performance optimizations.
+
+##### Routing:
+
+Cloudflare expects you to just write the logic to handle a request.
+Creating an HTTP server on top is handled by cloudflare
+
+example:
+```
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		console.log(request.body);
+		console.log(request.headers);
+
+		if (request.method === "GET") {
+			return Response.json({
+				message: "you sent a get request"
+			});
+		} else {
+			return Response.json({
+				message: "you did not send a get request"
+			});
+		}
+	},
+};
+```
+
+Cloudflare does not expect a routing library/http server out of the box. You can write a full application with just the constructs available above.
