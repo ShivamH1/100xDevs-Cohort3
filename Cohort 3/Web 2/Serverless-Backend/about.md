@@ -168,3 +168,70 @@ export default {
 ```
 
 Cloudflare does not expect a routing library/http server out of the box. You can write a full application with just the constructs available above.
+
+#### Why can’t we use express? Why does it cloudflare doesn’t start off with a simple express boiler plate?
+
+##### Reason 1 - Express heavily relies on Node.js
+
+https://community.cloudflare.com/t/express-support-for-workers/390844
+
+##### Split all your handlers in a file
+
+Create a generic handler that you can forward requests to from either express or hono or native cloudflare handler
+
+##### Organize your handlers in a single file for better modularity
+
+For instance, create a generic handler function that can process requests. This function can be utilized by various frameworks like Express, Hono, or even the native Cloudflare handler. Here's an example:
+
+```javascript
+// Generic handler function
+function handleRequest(request) {
+  // Process the request
+  if (request.method === "GET") {
+    return new Response("Handled GET request", { status: 200 });
+  } else {
+    return new Response("Unhandled request method", { status: 405 });
+  }
+}
+
+// Usage with Express
+app.use((req, res) => {
+  const response = handleRequest(req);
+  res.status(response.status).send(response.body);
+});
+
+// Usage with Cloudflare Workers
+addEventListener("fetch", (event) => {
+  event.respondWith(handleRequest(event.request));
+});
+```
+
+#### Hono framework for Cloudflare:
+
+Hono is a ultra-lightweight framework for Cloudflare Workers. It is designed to be used on Cloudflare Workers and takes advantage of the Workers' features to provide a simple and efficient way to build web applications.
+Hono is a micro-framework with a very small footprint (less than 1KB). It is designed to be used as a drop-in replacement for Express.js on Cloudflare Workers.
+Hono provides a simple API for building web applications, including support for routing, middleware, and template engines.
+Hono also supports multiple serverless platforms, including Cloudflare Workers, AWS Lambda, Google Cloud Functions, and more.
+
+##### Using hono:
+
+1. Initialize a new app
+   `npm create hono@latest my-app`
+2. Move to my-app and install the dependencies.
+   `cd my-app && npm install`
+3. Write code
+
+```
+import { Hono } from 'hono'
+const app = new Hono()
+
+app.get('/', (c) => c.text('Hello Cloudflare Workers!'))
+
+export default app
+```
+
+4. Run the program
+   `npm run dev`
+
+5. Deploy
+   `npm run deploy`
