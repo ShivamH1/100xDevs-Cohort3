@@ -235,3 +235,18 @@ export default app
 
 5. Deploy
    `npm run deploy`
+
+##### middleware in hono:
+
+```
+async function authMiddleware(c: any, next: any){
+  if (c.req.header('Authorization')){
+    await next();
+  }else{
+    return c.text("You don't have permission to");
+  }
+}
+
+app.post('/', authMiddleware, (c) => c.text('Hello Cloudflare Workers!'));
+```
+
