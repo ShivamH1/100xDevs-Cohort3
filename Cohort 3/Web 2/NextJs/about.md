@@ -45,7 +45,7 @@ What does nextjs provide you?
 
 Next.js offers several advantages over React:
 
-- **Server-Side Rendering (SSR):** Improves SEO by rendering content on the server. React is CSR(Client Side Rendering) and Next.js provides SSR(Server Side Rendering).
+- **Server-Side Rendering (SSR):** Improves SEO by rendering content on the server. React is CSR(Client Side Rendering) or CDN(Content Delivery Network) -> files server and Next.js provides SSR(Server Side Rendering).
 - **Integrated API Routes:** Allows for a unified codebase combining frontend and backend.
 - **File-Based Routing:** Eliminates the need for react-router-dom.
 - **Optimized Bundling and Static Site Generation:** Enhances performance.
