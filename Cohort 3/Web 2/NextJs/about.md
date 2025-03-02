@@ -57,3 +57,13 @@ Next.js offers several advantages over React:
 - **Highly Opinionated:** Makes it challenging to migrate away due to its specific conventions and structure.
 
 #### Note - When we run `npm run build` in React, we build a bundle of file which is none other that the html, css and js files. In Next.js, this command builds a production-ready application with optimized server-side rendering, static site generation, and route pre-rendering.
+
+#### Important - Next.js uses a file-based routing system. This means if you create a directory named `users` and within it a file named `page.tsx`, accessing the `/users` route will render the content of the `page.tsx` file.
+
+### Routing in nextjs
+Routing in React - 
+![routing in react](image-3.png)
+
+##### Next.js has a file based router. This means that the way you create your files, describes what renders on a route
+![routing in next.js](image-4.png)
+![alt text](image-5.png)
