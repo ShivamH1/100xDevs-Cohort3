@@ -55,3 +55,5 @@ Next.js offers several advantages over React:
 
 - **Requires Server:** Cannot be distributed via CDN, necessitating a server for SSR, which can be costly.
 - **Highly Opinionated:** Makes it challenging to migrate away due to its specific conventions and structure.
+
+#### Note - When we run `npm run build` in React, we build a bundle of file which is none other that the html, css and js files. In Next.js, this command builds a production-ready application with optimized server-side rendering, static site generation, and route pre-rendering.
