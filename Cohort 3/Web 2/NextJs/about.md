@@ -61,9 +61,20 @@ Next.js offers several advantages over React:
 #### Important - Next.js uses a file-based routing system. This means if you create a directory named `users` and within it a file named `page.tsx`, accessing the `/users` route will render the content of the `page.tsx` file.
 
 ### Routing in nextjs
-Routing in React - 
+
+Routing in React -
 ![routing in react](image-3.png)
 
 ##### Next.js has a file based router. This means that the way you create your files, describes what renders on a route
+
 ![routing in next.js](image-4.png)
 ![alt text](image-5.png)
+
+### Server Side Rendering (SSR) - Solves SEO optimization and waterfalling problem 
+
+1. Run npm run dev
+2. Visit http://localhost:3000/signup
+3. Notice the response you get back in your HTML file
+   ![ssr](image-6.png)
+   Now if GoogleBot tries to scrape your page, it’ll understand that this is a signup page without running any Javascript.
+   The first index.html file it get’s back will have context about the page since it was server side rendered
