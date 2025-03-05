@@ -46,20 +46,25 @@ import axios from "axios";
 
 // TO MAKE IT SERVER SIDE COMPONENT -
 export default async function Todo() {
-  const response = await axios.get(
-    "https://jsonplaceholder.typicode.com/todos/1"
-  );
+  // const response = await axios.get(
+  //   "https://jsonplaceholder.typicode.com/todos/1"
+  // );
 
-  await new Promise(r => setTimeout(r, 5000));
+  //connecting to server
+  const response = await axios.get("http://localhost:3000/api/v1/user/details");
+
+  // await new Promise(r => setTimeout(r, 5000));
 
   const data = response.data;
 
   return (
     <div className="flex border p-4">
-      Todo :
-      <div className="flex justify-between items-center">
-        {data.title}{" "}
-        {data.completed ? "Done" : "Not Completed"}
+      {/* Todo : */}
+      User: {data.user}
+      <div className="flex flex-col justify-between items-center">
+        {/* {data.title}{" "}
+        {data.completed ? "Done" : "Not Completed"} */}
+        <div>Email: {data.email}</div>
       </div>
     </div>
   );
