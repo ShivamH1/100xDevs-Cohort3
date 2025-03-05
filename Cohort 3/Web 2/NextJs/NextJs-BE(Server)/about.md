@@ -98,3 +98,41 @@ async function getUserDetails() {
 }
 ```
 Not the best way to fetch the data from the server.
+
+### Singleton in prisma - 
+In a local development environment, using a singleton pattern for the Prisma client helps to prevent the creation of multiple instances of the Prisma client during hot-reloading, which can lead to exhausting database connections. In production, the application typically runs in a more stable environment without frequent restarts, so a singleton pattern might not be necessary. However, using a singleton ensures that only one instance of the Prisma client is maintained across the application, which can be beneficial for managing resources efficiently.
+
+```typescript
+import { PrismaClient } from '@prisma/client';
+
+declare global {
+  // Ensure that the global prisma variable is only declared once
+  var prisma: PrismaClient | undefined;
+}
+
+const prisma = globalThis.prisma || new PrismaClient();
+
+if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma;
+
+export default prisma;
+```
+
+OR
+
+```typescript
+import { PrismaClient } from '@prisma/client'
+
+const prismaClientSingleton = () => {
+  return new PrismaClient()
+}
+
+declare global {
+  var prisma: undefined | ReturnType<typeof prismaClientSingleton>
+}
+
+const prisma = globalThis.prisma ?? prismaClientSingleton()
+
+export default prisma
+
+if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma
+```
