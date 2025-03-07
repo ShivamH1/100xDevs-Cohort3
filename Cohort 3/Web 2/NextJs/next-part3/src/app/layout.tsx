@@ -24,11 +24,38 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <header className="bg-gray-200 border-b">
+        <nav className="max-w-4xl mx-auto px-4 py-2 flex justify-between">
+          <a href="/" className="text-lg font-bold">
+            Next App
+          </a>
+          <ul className="flex space-x-4">
+            <li>
+              <a href="/about" className="hover:text-blue-500">
+                About
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <aside className="w-64 border-r bg-gray-100 p-4 hidden md:block">
+        <h2 className="text-lg font-bold">Menu</h2>
+        <ul className="mt-4 space-y-2">
+          <li>
+            <a href="/about" className="hover:text-blue-500">
+              About
+            </a>
+          </li>
+        </ul>
+      </aside>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>
+      <footer className="bg-gray-200 border-t p-4 text-center">
+        Copyright {new Date().getFullYear()} Next App
+      </footer>
     </html>
   );
 }
