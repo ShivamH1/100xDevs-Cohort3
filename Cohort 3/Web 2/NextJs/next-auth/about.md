@@ -46,6 +46,16 @@ Local storage is not secure for storing sensitive information like authenticatio
 
 In Next.js, you should use server-side sessions instead of local storage. This is because sessions are stored on the server, making it harder for an attacker to access the sensitive information. Additionally, sessions are encrypted and can be made secure against XSS attacks.
 
+### Why not use JWT + localstorage?
+
+While JWT + localstorage may seem like a simple solution for authentication, it is not secure. This is because:
+
+1. JWTs are not encrypted, so an attacker can read the contents of the token.
+2. Local storage is accessible by any JavaScript code running on the same domain.
+3. Local storage is vulnerable to XSS attacks.
+
+Therefore, it is not recommended to use JWT + localstorage for authentication in a Next.js application. Instead, you should use server-side sessions.
+
 Express app - 
 ![Express](image.png)
 
