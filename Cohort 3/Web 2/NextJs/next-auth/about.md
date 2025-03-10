@@ -45,3 +45,9 @@ Local storage is not secure for storing sensitive information like authenticatio
 3. Local storage is vulnerable to XSS attacks.
 
 In Next.js, you should use server-side sessions instead of local storage. This is because sessions are stored on the server, making it harder for an attacker to access the sensitive information. Additionally, sessions are encrypted and can be made secure against XSS attacks.
+
+Express app - 
+![Express](image.png)
+
+Next app - 
+![Next](image-1.png)
