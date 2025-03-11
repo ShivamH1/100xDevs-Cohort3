@@ -56,8 +56,154 @@ While JWT + localstorage may seem like a simple solution for authentication, it 
 
 Therefore, it is not recommended to use JWT + localstorage for authentication in a Next.js application. Instead, you should use server-side sessions.
 
-Express app - 
+Express app -
 ![Express](image.png)
 
-Next app - 
+Next app -
 ![Next](image-1.png)
+
+### Example:
+
+```js
+// app/page.js - Server Component
+export default async function Page() {
+  // This code runs only on the server
+  const data = await fetch("https://api.example.com/data");
+  const posts = await data.json();
+
+  return (
+    <main>
+      <h1>My Posts</h1>
+      {posts.map((post) => (
+        <article key={post.id}>{post.title}</article>
+      ))}
+    </main>
+  );
+}
+
+// app/server-components/LoginFormServer.js
+import React from "react";
+
+export default async function LoginFormServer() {
+  // Server-side logic here (if needed)
+  // For example, fetching data from a database
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const response = await fetch("/api/login", {
+      method: "POST",
+      body: formData,
+    });
+    if (!response.ok) {
+      return alert("Invalid credentials");
+    }
+    const data = await response.json();
+    // Do something with the data, like redirecting to a new page
+    window.location.href = "/dashboard";
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="email" name="email" required />
+      <input type="password" name="password" required />
+      <button type="submit">Login</button>
+    </form>
+  );
+}
+
+```
+
+Server Components:
+
+- Run only on the server, never in the browser
+- Can directly access server resources (databases, file system)
+- Can't use React hooks or browser APIs
+- Don't send React component code to the client, only the HTML result
+- Can't have event listeners (onClick, etc.)
+
+```jsx
+"use client"; // This directive marks it as a Client Component
+
+// app/components/LoginForm.js
+import { useState } from "react";
+
+export default function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Client-side form submission logic
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button type="submit">Login</button>
+    </form>
+  );
+}
+```
+
+Client Components:
+
+- Start on the server but hydrate and run in the browser
+- Can use hooks, state, effects, and browser APIs
+- Can have event listeners and handle interactions
+- Send React component code to the browser
+
+#### Why JWT in localStorage is Problematic - Using JWT tokens stored in localStorage for authentication has several security issues:
+
+```jsx
+"use client";
+
+// UNSAFE approach - storing JWT in localStorage
+function loginUser(credentials) {
+  fetch("/api/login", {
+    method: "POST",
+    body: JSON.stringify(credentials),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // PROBLEM: This token is vulnerable to XSS attacks
+      localStorage.setItem("token", data.token);
+    });
+}
+
+// app/server-components/FetchUserData.js
+export default async function FetchUserData() {
+  // Attempting to access localStorage in a server component
+  // This will result in an error since localStorage is not available on the server
+
+  try {
+    const token = localStorage.getItem("token"); // This will cause an error
+    console.log("Token:", token);
+  } catch (error) {
+    console.error("Error accessing localStorage:", error.message);
+  }
+
+  return <div>Check console for errors</div>;
+}
+```
+
+The primary issues are:
+
+#### Note - Can't access local storage in server side component. Because localstorage doens't exist in server. Local storage exist in browser side or client side.
+
+- Vulnerable to XSS (Cross-Site Scripting): Any JavaScript running on your site can access localStorage and steal the token
+- No automatic security features: Unlike cookies, localStorage:
+
+- Has no HttpOnly flag option
+- Has no Secure flag option
+- Has no SameSite attribute
+- Cannot be restricted from JavaScript access
