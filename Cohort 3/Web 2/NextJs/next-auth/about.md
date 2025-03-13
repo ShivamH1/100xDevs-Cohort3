@@ -230,7 +230,7 @@ It supports various providers:
 - It can be used to conditionally render components based on the user's authentication status.
 - If the session is not available, the hook will return `null`.
 
-useSession Example: client side authentication
+useSession Example: client side authentication (this is client side rendering)
 
 ```tsx
 "use client";
@@ -261,6 +261,24 @@ function RealHome() {
       >
         {session.status === "authenticated" ? "Logout" : "Login"}
       </button>
+    </div>
+  );
+}
+```
+
+server side rendering example -
+
+```tsx
+import { getServerSession } from "next-auth";
+
+//server side rendering
+export default async function Home() {
+  const session = await getServerSession();
+
+  return (
+    <div>
+      <h1>Welcome to Home Page</h1>
+      <p>Session: {JSON.stringify(session)}</p>
     </div>
   );
 }
