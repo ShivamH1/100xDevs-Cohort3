@@ -62,7 +62,7 @@ Express app -
 Next app -
 ![Next](image-1.png)
 
-### Example:
+#### Example:
 
 ```js
 // app/page.js - Server Component
@@ -207,3 +207,79 @@ The primary issues are:
 - Has no Secure flag option
 - Has no SameSite attribute
 - Cannot be restricted from JavaScript access
+
+### Solution - NextAuth
+
+- Providers are services that allow users to authenticate with your application.
+- Providers implement the strategy for authentication.
+- Providers have a unique id.
+- Providers can be configured to work with NextAuth.
+
+It supports various providers:
+
+- Login with email
+- Login with google
+- Login with facebook
+
+### useSession Hook - The useSession() React Hook in the NextAuth.js client is the easiest way to check if someone is signed in.
+
+- It should be used in the client side.
+  -Make sure that <SessionProvider> is added to pages/\_app.js.
+- The `useSession` hook from NextAuth can be used to get the user session in client-side components.
+- The hook returns the session object which contains the user's data and the authentication status.
+- It can be used to conditionally render components based on the user's authentication status.
+- If the session is not available, the hook will return `null`.
+
+useSession Example: client side authentication (this is client side rendering)
+
+```tsx
+"use client";
+import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
+
+export default function Home() {
+  return (
+    <SessionProvider>
+      <RealHome />
+    </SessionProvider>
+  );
+}
+
+function RealHome() {
+  const session = useSession();
+
+  return (
+    <div className="flex items-center justify-center">
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => {
+          if (session.status === "authenticated") {
+            signOut();
+          } else {
+            signIn();
+          }
+        }}
+      >
+        {session.status === "authenticated" ? "Logout" : "Login"}
+      </button>
+    </div>
+  );
+}
+```
+
+server side rendering example -
+
+```tsx
+import { getServerSession } from "next-auth";
+
+//server side rendering
+export default async function Home() {
+  const session = await getServerSession();
+
+  return (
+    <div>
+      <h1>Welcome to Home Page</h1>
+      <p>Session: {JSON.stringify(session)}</p>
+    </div>
+  );
+}
+```
