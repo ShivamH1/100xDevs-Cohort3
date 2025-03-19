@@ -167,6 +167,19 @@ A monorepo framework provides tools and conventions for managing projects that c
 
 ### Turborepo as a build system orchestrator:
 
+Initialize Turborepo
+
+````jsx
+npx create-turbo@latest
+```
+
+```
+Enable Remote Caching (recommended): `pnpm dlx turbo login`
+
+To connect to your Remote Cache, run the following in any turborepo:
+`npx turbo link`
+```
+
 Turborepo is a `build system orchestrator` .
 
 The key feature of TurboRepo is its ability to manage and optimize the execution of these tasks across your monorepo. It does this through:
@@ -176,3 +189,18 @@ The key feature of TurboRepo is its ability to manage and optimize the execution
 2. **Parallelization**: It can run independent tasks in parallel, making efficient use of your machine's resources. This reduces the overall time needed to complete all tasks in your project.
 3. **Dependency Graph Awareness**: TurboRepo understands the dependency graph of your monorepo. This means it knows which packages depend on each other and can ensure tasks are run in the correct order.
 ![dependencyGraphAwareness](image-3.png)
+````
+
+### Folder Structure of TurboRepo:
+
+#### End user apps (websites/core backend)
+
+1. `apps/web` - A Next.js website
+2. `apps/docs` - A Docs website that has all the documentation related to your project
+
+#### Helper packages
+
+1. `packages/ui` - UI packages
+2. `packages/typescript-config` - Shareable TS configuration
+3. `packages/eslint-config` - Shareable ESLine configuration
+   ![folder](image-4.png)
