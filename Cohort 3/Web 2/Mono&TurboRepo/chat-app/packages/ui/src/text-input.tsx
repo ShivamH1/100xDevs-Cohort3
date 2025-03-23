@@ -1,15 +1,17 @@
-type PropType = {
+
+interface PropType {
     placeholder: string;
-    // onChange: () => void;
+    size: "big" | "small",
 }
 
-export function TextInput({ placeholder } : PropType ) {
-    return (
-        <input style={{
-            padding: '0.5rem',
-            fontSize: '1rem',
-            borderRadius: '0.25rem',
-            border: '1px solid #ccc',
-        }} type="text" placeholder={placeholder}></input>
-    )
+export function TextInput({
+    placeholder,
+    size,
+}: PropType) {
+    return <input placeholder={placeholder} style={{
+        padding: size === "big" ? 20 : 10,
+        margin: size === "big" ? 20 : 10,
+        borderColor: "black",
+        borderWidth: 1,
+    }}></input>
 }
