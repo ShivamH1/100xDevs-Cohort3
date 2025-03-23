@@ -204,3 +204,5 @@ The key feature of TurboRepo is its ability to manage and optimize the execution
 2. `packages/typescript-config` - Shareable TS configuration
 3. `packages/eslint-config` - Shareable ESLine configuration
    ![folder](image-4.png)
+
+#### Note - You don't import a component by relative path because it can be deployed independently. For example, if you want to use the `Input` component in your `web` app, you should import it like this: `import { Input } from '@repo/ui'`, and not like this: `import { Input } from '../../../packages/ui/src/components/Input'`. This is because the relative path can change depending on how the packages are deployed, and also because the `Input` component is a part of the `@repo/ui` package, which is a separate package from the `web` app.
