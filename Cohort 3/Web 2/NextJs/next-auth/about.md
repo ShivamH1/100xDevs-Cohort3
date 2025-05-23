@@ -266,7 +266,7 @@ function RealHome() {
 }
 ```
 
-server side rendering example -
+getServerSession example: server side authentication (this is server side rendering)
 
 ```tsx
 import { getServerSession } from "next-auth";
